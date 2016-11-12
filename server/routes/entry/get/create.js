@@ -1,10 +1,10 @@
 module.exports = function createRoute(log) {
   return {
     verb: 'get',
-    uriTemplate: '/home',
+    uriTemplate: '/entry',
     endpoint: function * () {
-      log('Inside Home endpoint');
-      this.body = 'Home';
+      log('Executing API entry point');
+      this.body = 'API Entry Point';
       this.status = 200;
     }
   };

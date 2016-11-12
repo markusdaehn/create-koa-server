@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 
 describe('server', () => {
-  context.only('when create is called', () => {
+  context('when create is called', () => {
     let sandbox;
     let middleware;
     let logger;

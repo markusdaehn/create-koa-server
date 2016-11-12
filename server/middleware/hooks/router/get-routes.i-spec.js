@@ -2,7 +2,7 @@ const getRoutes = require('./get-routes');
 const path = require('path');
 const { assert } = require('chai');
 
-describe('router get-routes', () => {
+describe('router get-routes integration', () => {
   context('when passed the path to the server root', () => {
     const EXPECTED_ROUTES_LEN = 1;
     let routes;
