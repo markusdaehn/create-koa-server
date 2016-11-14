@@ -42,7 +42,7 @@ function createServer(config, koa, ip, port, logger) {
           reject(error);
         } else {
           server = null;
-          logger.info(SERVER_LISTENING_MSG);
+          logger.info(SERVER_CLOSED_MSG);
           resolve();
         }
       });
