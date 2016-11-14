@@ -4,9 +4,7 @@ module.exports = function (config, koa, logger, ip, port, middleware) {
 
   hooks.errorHandler.register(server, logger);
 
-  Object.keys(plugins).forEach((pluginName)=> {
-    plugins[pluginName].register(server, logger);
-  });
+  plugins.register(server, logger);
 
   hooks.router.register(server, logger);
 

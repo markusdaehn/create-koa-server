@@ -1,4 +1,4 @@
-module.exports = function getDirectories(fs, path, logger, dirname) {
+module.exports = function getDirectories(fs, path, dirname, server, logger) {
   logger.info(`getDirectories > : getting directories for directory ${dirname}`);
 
   let files = fs.readdirSync(dirname);
@@ -9,8 +9,13 @@ module.exports = function getDirectories(fs, path, logger, dirname) {
     return path.join(dirname, file);
   }).filter((file) => {
     return fs.statSync(file).isDirectory();
+  }).map((directory) => {
+    return {
+      path: directory,
+      name: path.parse(directory).name
+    }
   });
 
-  logger.info(`getDirectories < : returning directories ${directories}`);
+  logger.info(`getDirectories < : returning directories ${directories.map((dir) => { return dir.path; })}`);
   return directories || []
 }

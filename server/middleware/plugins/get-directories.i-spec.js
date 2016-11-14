@@ -12,10 +12,12 @@ describe('server middleware plugins get-directories -- integration', () => {
 
   let sandbox;
   let logger;
+  let server;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     logger = createLogger(sandbox);
+    server = {};
   });
 
   afterEach(() => {
@@ -24,12 +26,10 @@ describe('server middleware plugins get-directories -- integration', () => {
 
   context('when passed the current dirname', () => {
     it('should return the list of directory paths in the current directory', () => {
-      let directories = getDirectories(fs, path, logger, __dirname);
+      let directories = getDirectories(fs, path, __dirname, server, logger);
 
       directories.forEach((directory) => {
-        let parsed = path.parse(directory);
-
-        assert.isTrue(expected_directories.includes(parsed.name), `The directory ${parsed.name} was not an expected directory`);
+        assert.isTrue(expected_directories.includes(directory.name), `The directory ${parsed.name} was not an expected directory`);
       });
     });
   });
