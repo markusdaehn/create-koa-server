@@ -17,7 +17,8 @@ describe('server', () => {
       sandbox = sinon.sandbox.create();
       middleware = createMiddleware(sandbox);
       logger = createLogger(sandbox);
-      app = createApp(sandbox);
+      httpServer = createHttpServer(sandbox);
+      app = createApp(sandbox, httpServer);
       koa = function() { return app };
       port = 8080;
       ip = '156.129.55.01';
@@ -56,12 +57,20 @@ function createMiddleware(sandbox) {
     }
   };
 }
-function createApp(sandbox) {
+function createApp(sandbox, httpServer) {
   return {
     use: sandbox.stub(),
-    env: 'test'
+    env: 'test',
+    listen: sandbox.stub().returns(httpServer)
   };
 }
+
+function createHttpServer(sandbox) {
+  return {
+    close: sandbox.stub()
+  };
+}
+
 function createLogger(sandbox) {
   return {
     error: sandbox.stub(),

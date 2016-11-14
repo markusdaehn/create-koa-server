@@ -3,7 +3,7 @@ const path = require('path');
 const sinon = require('sinon');
 const { assert } = require('chai');
 
-describe.only('router get-routes unit', () => {
+describe('server middleware hooks router get-routes -- unit', () => {
   const PATH_NOSLASH = '../..';
   const PATH_SLASH = `${PATH_NOSLASH}/`;
   const JOINED_PATH = `${PATH_SLASH}routes`;
