@@ -9,8 +9,9 @@ describe('server', () => {
     let logger;
     let app;
     let koa;
-    let port = 8080;
-    let ip = '156.129.55.01';
+    let port;
+    let ip;
+    let root;
     let server;
 
     beforeEach(() => {
@@ -22,8 +23,14 @@ describe('server', () => {
       koa = function() { return app };
       port = 8080;
       ip = '156.129.55.01';
-
-      server = createServer(koa, logger, ip, port, middleware);
+      root = __dirname;
+      
+      config = {
+        ip,
+        port,
+        root
+      };
+      server = createServer(koa, logger, config, middleware);
     });
 
     afterEach(() => {
@@ -45,21 +52,17 @@ function createMiddleware(sandbox) {
       },
       router: {
         register: sandbox.stub()
-      },
-      logger: {
-        register: sandbox.stub()
-      },
+      }
     },
     plugins: {
-      throttler: {
-        register: sandbox.stub()
-      }
+      register: sandbox.stub()
     }
   };
 }
 function createApp(sandbox, httpServer) {
   return {
     use: sandbox.stub(),
+    emit: sandbox.stub(),
     env: 'test',
     listen: sandbox.stub().returns(httpServer)
   };

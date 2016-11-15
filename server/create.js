@@ -1,5 +1,5 @@
-module.exports = function (config, koa, logger, ip, port, middleware) {
-  const server = createServer(config, koa, ip, port, logger);
+module.exports = function (koa, logger, config, middleware) {
+  const server = createServer(koa, logger, config);
   const { hooks, plugins } = middleware;
 
   hooks.errorHandler.register(server, logger);
@@ -12,10 +12,12 @@ module.exports = function (config, koa, logger, ip, port, middleware) {
 }
 
 
-function createServer(config, koa, ip, port, logger) {
-  const SERVER_LISTENING_MSG = `Koa server listening on ${ip}:${port} in ${app.env} mode`;
-  const SERVER_CLOSED_MSG = `Koa server closed on ${ip}:${port} in ${app.env} mode`;
+function createServer(koa, logger, config) {
   const app = new koa();
+  const { ip, port, root, env=app.env } = config;
+
+  const SERVER_LISTENING_MSG = `Koa server listening on ${ip}:${port} in ${env} mode`;
+  const SERVER_CLOSED_MSG = `Koa server closed on ${ip}:${port} in ${env} mode`;
 
   let server = null;
   const listen = () => {
@@ -56,8 +58,9 @@ function createServer(config, koa, ip, port, logger) {
   };
 
   return {
-    root: __dirname,
+    root,
     config,
+
     start,
     stop,
 
@@ -65,7 +68,7 @@ function createServer(config, koa, ip, port, logger) {
     use: app.use.bind(app),
     emit: app.emit.bind(app),
     get env() {
-      return app.env || config.env;
+      return env;
     }
   };
 }

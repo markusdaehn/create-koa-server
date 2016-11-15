@@ -2,25 +2,35 @@
 const R = require('ramda');
 const fs = require('fs');
 const path = require('path');
-const getDirectories = R.curry(require('./get-directories'))(fs, path, __dirname);
 const toCamelCase = require('./to-camel-case');
 const getPlugins = require('./get-plugins');
 const sinon = require('sinon');
+const { assert } = require('chai');
 
-describe.only('middleware plugins get-plugins -- integration', () => {
+describe('middleware plugins get-plugins -- integration', () => {
+  const expected_plugins = [
+    '0_bodyParser',
+    '1_logger'
+  ]
   let sandbox;
   let server;
   let logger;
+  let getDirectories;
 
   beforeEach(() =>{
     sandbox = sinon.sandbox.create();
-    server = {};
+    server = {root: __dirname};
     logger = createLogger(sandbox);
+    getDirectories = R.curry(require('./get-directories'))(fs, path);
   })
   context('when called', () => {
     it('should return the correct plugins', () => {
+
       let plugins = getPlugins(getDirectories, toCamelCase, server, logger);
-      console.log('###>>>', plugins);
+
+      Object.keys(plugins).forEach((plugin) => {
+        assert.isTrue(expected_plugins.includes(plugin));
+      });
     });
   });
 });
@@ -28,7 +38,8 @@ describe.only('middleware plugins get-plugins -- integration', () => {
 
 function createLogger(sandbox) {
   return {
-    info: sandbox.spy((a)=> {console.log(a)}),
-    debug: sandbox.spy((a)=> {console.log(a)})
+    info: sandbox.spy(),
+    debug: sandbox.spy(),
+    error: sandbox.spy()
   };
 }

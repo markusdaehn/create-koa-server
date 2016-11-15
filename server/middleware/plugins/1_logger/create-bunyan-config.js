@@ -1,4 +1,4 @@
-module.exports = createBunyanConfig(server, logger) {
+module.exports = function createBunyanConfig(server, logger) {
   return {
     updateLogFields: function (fields) {
       fields.status = this.response.status;

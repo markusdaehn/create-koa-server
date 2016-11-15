@@ -1,5 +1,5 @@
-module.exports = function register(initRoutes, router, getRoutes, server, logger) {
-  initRoutes(router, getRoutes, server, logger);
+module.exports = function register(initRoutes, server, logger) {
+  let router = initRoutes(server, logger);
 
   server.use(router.routes);
   server.use(router.allowedMethods());
