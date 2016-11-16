@@ -1,7 +1,6 @@
-const fs = require('fs');
-const path = require('path');
 const R = require('ramda');
 const create = require('./create');
-const envConfig = require('./environment');
+const getEnv = R.curry(require('./create-env'))(require);
+const createDefault = require('./create-default');
 
-module.exports = create(fs, path, process.env, R.merge, __dirname, envConfig)
+module.exports = create(createDefault, createEnv, R.merge, process.env, __dirname);
