@@ -1,4 +1,6 @@
-module.exports = function create(envVars, root) {
+module.exports = function create(envVars) {
+  const root = envVars.SERVER_ROOT || __dirname;
+
   return {
     server: {
       env: envVars.NODE_ENV || 'development',
