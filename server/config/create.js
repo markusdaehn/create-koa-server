@@ -1,10 +1,9 @@
-module.exports = create;
+module.exports = function create(createEnv, merge, envVars, root) {
+  const DEFAULT_CONFIG = 'default';
+  let defaultConfig = createEnv(envVars, root, DEFAULT_CONFIG);
+  let envConfig = createEnv(envVars, root, defaultConfig.server.env);
 
-function create(createBaseConfig, getEnvironmentConfig) {
-  let baseConfig = createBaseConfig();
-  let envConfig = getEnvironmentConfig();
-  
-  let config = merge(baseConfig, envConfig || {});
+  let config = merge(defaultConfig, envConfig || {});
 
   return config;
 }

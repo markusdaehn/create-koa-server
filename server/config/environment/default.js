@@ -1,6 +1,4 @@
-module.exports = createBaseConfig;
-
-function createBaseConfig(envVars, root) {
+module.exports = function create(envVars, root) {
   return {
     server: {
       env: envVars.NODE_ENV || 'development',
