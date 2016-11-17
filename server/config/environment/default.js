@@ -1,19 +1,19 @@
 module.exports = function create(envVars) {
-  const root = envVars.SERVER_ROOT || __dirname;
+  const root = envVars.SERVER_ROOT;
 
   return {
     server: {
-      env: envVars.NODE_ENV || 'development',
+      env: envVars.NODE_ENV,
 
-      ip: envVars.IP || undefined,
-      port: envVars.PORT || 8080,
+      ip: envVars.IP,
+      port: envVars.PORT,
 
       root
     },
 
     logging: {
      level: 'error',
-     file: envVars.LOG_PATH || `${root}/logs/log.txt`
+     file: envVars.LOG_PATH
     }
   };
 }

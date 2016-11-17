@@ -1,5 +1,7 @@
-module.exports = {
-  server: {
-    env: 'production'
-  }
+module.exports = function() {
+  return {
+    server: {
+      env: 'production'
+    }
+  };
 };
