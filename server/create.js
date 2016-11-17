@@ -14,7 +14,7 @@ module.exports = function (koa, logger, config, middleware) {
 
 function createServer(koa, logger, config) {
   const app = new koa();
-  const { ip, port, root, env=app.env } = config.server;
+  const { ip, port, root, env = app.env } = config.server;
 
   const SERVER_LISTENING_MSG = `Koa server listening on ${ip}:${port} in ${env} mode`;
   const SERVER_CLOSED_MSG = `Koa server closed on ${ip}:${port} in ${env} mode`;

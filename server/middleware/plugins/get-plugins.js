@@ -2,7 +2,7 @@ module.exports = getPlugins;
 
 function getPlugins(getDirectories, toCamelCase, server, logger) {
   logger.info(`getPlugins > : getting plugins`);
-  console.log('###', getDirectories)
+
   const directories = getDirectories(server, logger);
 
   let plugins = {}, pluginNames = [];

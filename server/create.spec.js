@@ -24,13 +24,15 @@ describe('server', () => {
       port = 8080;
       ip = '156.129.55.01';
       root = __dirname;
-      
+
       config = {
-        ip,
-        port,
-        root
+        server: {
+          ip,
+          port,
+          root
+        }
       };
-      server = createServer(koa, logger, config, middleware);
+
     });
 
     afterEach(() => {
@@ -38,6 +40,8 @@ describe('server', () => {
     });
 
     it('should define the server root path', () => {
+      server = createServer(koa, logger, config, middleware);
+
       assert.isDefined(server.root, 'The server root path was not set');
     });
 

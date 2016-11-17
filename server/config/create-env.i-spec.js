@@ -10,7 +10,7 @@ describe('server config create-env -- integration', () => {
 
         let envVars = getEnvVars({env: {NODE_ENV: env}}, DEFAULT_SERVER_ROOT);
         let config = createEnv(require, envVars, env);
-        console.log(DEFAULT_SERVER_ROOT)
+
         assert.equal(config.server.env, env, 'The config did not have the correct environment');
       });
     });
