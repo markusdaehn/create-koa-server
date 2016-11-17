@@ -1,4 +1,4 @@
-module.exports = function (koa, config, middleware, logger) {
+module.exports = function (koa, middleware, config, logger) {
   const server = createServer(koa, config, logger);
   const { hooks, plugins } = middleware;
 

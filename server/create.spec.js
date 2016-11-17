@@ -40,7 +40,7 @@ describe('server', () => {
     });
 
     it('should define the server root path', () => {
-      server = createServer(koa, config, middleware, logger);
+      server = createServer(koa, middleware, config, logger);
 
       assert.isDefined(server.root, 'The server root path was not set');
     });

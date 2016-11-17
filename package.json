@@ -2,7 +2,7 @@
   "name": "koa-api-starter",
   "version": "1.0.0",
   "description": "Koa API Starter ",
-  "main": "server.js",
+  "main": "./server",
   "scripts": {
     "test": "NODE_ENV=test node ./node_modules/.bin/_mocha \"./**/*.spec.js\"",
     "i-test": "NODE_ENV=test node ./node_modules/.bin/_mocha \"./**/*.i-spec.js\"",
