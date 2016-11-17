@@ -1,12 +1,13 @@
 module.exports = function getDirectories(fs, path, server, logger) {
-  logger.info(`getDirectories > : getting directories for directory ${server.root}`);
+  const pluginsPath = path.join(server.root, '/middleware/plugins');
+  logger.info(`getDirectories > : getting directories for directory ${pluginsPath}`);
 
-  let files = fs.readdirSync(server.root);
+  const files = fs.readdirSync(pluginsPath);
   logger.debug(`getDirectories: found ${files.length} files`)
 
-  let directories = files.map((file) => {
-    logger.debug(`getDirectories: joining directory ${server.root} and file ${file}`);
-    return path.join(server.root, file);
+  const directories = files.map((file) => {
+    logger.debug(`getDirectories: joining directory ${pluginsPath} and file ${file}`);
+    return path.join(pluginsPath, file);
   }).filter((file) => {
     return fs.statSync(file).isDirectory();
   }).map((directory) => {

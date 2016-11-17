@@ -19,7 +19,7 @@ describe('middleware plugins get-plugins -- integration', () => {
 
   beforeEach(() =>{
     sandbox = sinon.sandbox.create();
-    server = {root: __dirname};
+    server = {root: path.resolve(__dirname, '../..')};
     logger = createLogger(sandbox);
     getDirectories = R.curry(require('./get-directories'))(fs, path);
   })

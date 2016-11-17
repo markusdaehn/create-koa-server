@@ -17,7 +17,7 @@ describe('server middleware plugins get-directories -- integration', () => {
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     logger = createLogger(sandbox);
-    server = {root: __dirname};
+    server = {root: path.resolve(__dirname, '../..')};
   });
 
   afterEach(() => {
