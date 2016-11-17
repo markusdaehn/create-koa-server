@@ -1,3 +1,7 @@
 module.exports = function() {
-  return {};
+  return {
+    server: {
+      env: 'test'
+    }
+  };
 }
