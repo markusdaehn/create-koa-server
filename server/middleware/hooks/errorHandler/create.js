@@ -1,6 +1,5 @@
-
 module.exports = function createErrorHandler(server, logger) {
-  return function *(next) {
+  return function * (next) {
     try {
       yield next;
     } catch (error) {
