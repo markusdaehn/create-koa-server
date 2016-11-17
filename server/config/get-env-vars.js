@@ -1,7 +1,7 @@
-module.exports = function getEnvVars(envVars, defaultRoot) {
-  const root = envVars.SERVER_ROOT || defaultRoot;
+module.exports = function getEnvVars(path, freeze, dirname, envVars) {
+  const root = envVars.SERVER_ROOT || path.resolve(dirname, '../');
 
-  return Object.freeze({
+  return freeze({
     SERVER_ROOT: root,
     IP: envVars.IP || undefined,
     PORT: envVars.PORT || 8080,

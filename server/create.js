@@ -1,5 +1,5 @@
-module.exports = function (koa, logger, config, middleware) {
-  const server = createServer(koa, logger, config);
+module.exports = function (koa, config, middleware, logger) {
+  const server = createServer(koa, config, logger);
   const { hooks, plugins } = middleware;
 
   hooks.errorHandler.register(server, logger);
@@ -12,7 +12,7 @@ module.exports = function (koa, logger, config, middleware) {
 }
 
 
-function createServer(koa, logger, config) {
+function createServer(koa, config, logger) {
   const app = new koa();
   const { ip, port, root, env = app.env } = config.server;
 
