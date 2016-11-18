@@ -9,8 +9,8 @@ const { assert } = require('chai');
 
 describe('middleware plugins get-plugins -- integration', () => {
   const expected_plugins = [
-    '0_bodyParser',
-    '1_logger'
+    '0_test1Plugin',
+    '1_test2Plugin'
   ]
   let sandbox;
   let server;
@@ -27,7 +27,7 @@ describe('middleware plugins get-plugins -- integration', () => {
     it('should return the correct plugins', () => {
 
       let plugins = getPlugins(getDirectories, toCamelCase, server, logger);
-
+      console.log('##plugins', Object.keys(plugins));
       Object.keys(plugins).forEach((plugin) => {
         assert.isTrue(expected_plugins.includes(plugin));
       });

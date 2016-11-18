@@ -6,8 +6,8 @@ const { assert } = require('chai');
 
 describe('server middleware plugins get-directories -- integration', () => {
   const expected_directories = [
-    '0_body-parser',
-    '1_logger'
+    '0_test1-plugin',
+    '1_test2-plugin'
   ];
 
   let sandbox;
