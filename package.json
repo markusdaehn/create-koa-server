@@ -1,5 +1,5 @@
 {
-  "name": "koa-api-starter",
+  "name": "koa server",
   "version": "1.0.0",
   "description": "Koa API Starter",
   "main": "./server",
