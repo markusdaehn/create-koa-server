@@ -1,5 +1,5 @@
 {
-  "name": "koa-server",
+  "name": "create-koa-server",
   "version": "1.0.2",
   "description": "Koa API Starter",
   "main": "./server",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/markusdaehn/koa-server.git"
+    "url": "git+https://github.com/markusdaehn/create-koa-server.git"
   },
   "keywords": [
     "Koa",
@@ -24,9 +24,9 @@
   "author": "Markus Daehn",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/markusdaehn/koa-server/issues"
+    "url": "https://github.com/markusdaehn/create-koa-server/issues"
   },
-  "homepage": "https://github.com/markusdaehn/koa-server#readme",
+  "homepage": "https://github.com/markusdaehn/create-koa-server#readme",
   "dependencies": {
     "bunyan": "^1.8.4",
     "co": "^4.6.0",
