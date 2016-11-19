@@ -1,7 +1,7 @@
 {
   "name": "create-koa-server",
   "version": "1.0.2",
-  "description": "Koa API Starter",
+  "description": "Koa API/WEB server",
   "main": "./server",
   "scripts": {
     "dev": "NODE_ENV=development ./node_modules/.bin/nodemon --debug ./server | ./node_modules/.bin/bunyan",
@@ -19,7 +19,8 @@
     "Koa",
     "API",
     "Restful",
-    "Starter"
+    "Starter",
+    "Server"
   ],
   "author": "Markus Daehn",
   "license": "ISC",
