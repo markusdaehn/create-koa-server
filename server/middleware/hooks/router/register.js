@@ -3,4 +3,6 @@ module.exports = function register(initRoutes, server, logger) {
 
   server.use(router.routes);
   server.use(router.allowedMethods());
+
+  return router;
 }

@@ -1,25 +1,51 @@
 const getRoutes = require('./get-routes');
 const path = require('path');
+const glob = require('glob');
+const sinon = require('sinon');
 const { assert } = require('chai');
 
-describe('server middleware hooks router get-routes -- integration', () => {
-  context('when passed the path to the server root', () => {
-    const EXPECTED_ROUTES_LEN = 1;
-    let routes;
+describe.only('server middleware hooks router get-routes -- integration', () => {
+  const EXPECTED_ROUTES_LEN = 1;
+  const ROOT_NOSLASH = path.resolve(__dirname, '../../..');
+  const ROOT_SLASH = `${ROOT_NOSLASH}/`;
+  const JOINED_PATH = `${ROOT_SLASH}routes`;
+  const GLOB_PATH = './routes/**/index.js';
+  const EXPECTED_ROUTE_PATH = `${ROOT_SLASH}routes/test-route/get/index.js`;
 
-    before(() => {
-      routes = getRoutes(require, path, '../../../');
-    });
+  let sandbox;
+  let get;
+  let routes;
+  let routesResult;
 
-    it(`should return array of routes with length ${EXPECTED_ROUTES_LEN}`, () => {
-      assert.equal(routes.length, EXPECTED_ROUTES_LEN, `The get-routes did not return an array with length ${EXPECTED_ROUTES_LEN}`);
-    });
 
-    it('should return array with items that have a verb, uriTemplate, and endpoint defined', () => {
-      routes.forEach((route) => {
-        assert.isString(route.verb, 'The routes verb was not a string');
-        assert.isString(route.uriTemplate, 'The routes uriTemplate was not a string');
-        assert.equal(typeof route.endpoint, 'function', 'The routes endpoint was not a function');
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create();
+    get = sinon.stub();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  [ROOT_SLASH, ROOT_NOSLASH].forEach((root) => {
+    context(`when passed the following root '${root}'`, () => {
+      it(`should call require with ${EXPECTED_ROUTE_PATH}`, () => {
+        routesResult = getRoutes(get, glob, path, root);
+        assert.equal(get.args[0][0], EXPECTED_ROUTE_PATH, 'Did not call require with the correct route path');
+      });
+
+      it(`should return array of routes with length ${EXPECTED_ROUTES_LEN}`, () => {
+        routesResult = getRoutes(require, glob, path, root);
+        assert.equal(routesResult.length, EXPECTED_ROUTES_LEN, `The get-routes did not return an array with length ${EXPECTED_ROUTES_LEN}`);
+      });
+
+      it('should return an array of items with verb, uriTemplate, and endpoint properties defined', () => {
+        routesResult = getRoutes(require, glob, path, root);
+        routesResult.forEach((route) => {
+          assert.isString(route.verb, 'The routes verb was not a string');
+          assert.isString(route.uriTemplate, 'The routes uriTemplate was not a string');
+          assert.equal(typeof route.endpoint, 'function', 'The routes endpoint was not a function');
+        });
       });
     });
   });
