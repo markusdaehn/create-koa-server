@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
 
-describe.only('server middleware hooks router -- integration', () => {
+describe('server middleware hooks router -- integration', () => {
   let sandbox;
   let server;
   let logger;
