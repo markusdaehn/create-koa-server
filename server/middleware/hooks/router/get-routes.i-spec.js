@@ -4,7 +4,7 @@ const glob = require('glob');
 const sinon = require('sinon');
 const { assert } = require('chai');
 
-describe.only('server middleware hooks router get-routes -- integration', () => {
+describe('server middleware hooks router get-routes -- integration', () => {
   const EXPECTED_ROUTES_LEN = 1;
   const ROOT_NOSLASH = path.resolve(__dirname, '../../..');
   const ROOT_SLASH = `${ROOT_NOSLASH}/`;
@@ -16,11 +16,15 @@ describe.only('server middleware hooks router get-routes -- integration', () => 
   let get;
   let routes;
   let routesResult;
+  let server;
+  let logger;
 
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     get = sinon.stub();
+    server = createServer(sandbox);
+    logger = createLogger(sandbox);
   });
 
   afterEach(() => {
@@ -40,7 +44,7 @@ describe.only('server middleware hooks router get-routes -- integration', () => 
       });
 
       it('should return an array of items with verb, uriTemplate, and endpoint properties defined', () => {
-        routesResult = getRoutes(require, glob, path, root);
+        routesResult = getRoutes(require, glob, path, {root});
         routesResult.forEach((route) => {
           assert.isString(route.verb, 'The routes verb was not a string');
           assert.isString(route.uriTemplate, 'The routes uriTemplate was not a string');
@@ -50,3 +54,19 @@ describe.only('server middleware hooks router get-routes -- integration', () => 
     });
   });
 });
+
+
+function createServer(sandbox) {
+  return {
+    use: sandbox.stub(),
+    root: path.resolve(__dirname, '../../..')
+  };
+}
+
+function createLogger(sandbox) {
+  return {
+    error: sandbox.stub(),
+    debug: sandbox.stub(),
+    info: sandbox.stub()
+  };
+}
