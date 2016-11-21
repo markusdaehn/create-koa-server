@@ -20,9 +20,9 @@
   "author": "Markus Daehn",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/markusdaehn/koa-api-starter/issues"
+    "url": "https://github.com/markusdaehn/create-koa-server/issues"
   },
-  "homepage": "https://github.com/markusdaehn/koa-api-starter#readme",
+  "homepage": "https://github.com/markusdaehn/create-koa-server#readme",
   "dependencies": {
     "co": "^4.6.0",
     "glob": "^7.1.1",
@@ -30,7 +30,7 @@
     "koa-bodyparser": "^2.2.0",
     "koa-bunyan": "^1.0.0",
     "koa-bunyan-logger": "^1.3.0",
-    "ramda": "^0.22.1",
+    "ramda": "^0.22.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
