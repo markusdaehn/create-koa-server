@@ -1,7 +1,7 @@
 {
   "name": "create-koa-server",
   "version": "1.0.7",
-  "description": "WARNING: In heavy development, hold off in using. Koa API/WEB server",
+  "description": "Koa API/WEB server",
   "main": "./server",
   "scripts": {
     "dev": "NODE_ENV=development ./node_modules/.bin/nodemon --debug ./server | ./node_modules/.bin/bunyan",
