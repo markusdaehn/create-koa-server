@@ -7,6 +7,7 @@ module.exports = function getEnvVars(envVars, defaultRoot) {
     IP: envVars.IP || undefined,
     PORT: envVars.PORT || 8080,
     NODE_ENV: envVars.NODE_ENV,
-    LOG_PATH: envVars.LOG_PATH || `${root}/logs/log.txt`
+    LOG_PATH: envVars.LOG_PATH || `${root}/logs/log.txt`,
+    LOG_LEVEL: envVars.LOG_LEVEL || 'error'
   });
 }

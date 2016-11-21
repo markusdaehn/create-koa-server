@@ -11,10 +11,12 @@ module.exports = function create(envVars) {
 
       root
     },
-
-    logging: {
-     level: 'error',
-     file: envVars.LOG_PATH
+    app: {
+      name: `basic-app-${envVars.NODE_ENV}`,
+      logging: {
+        level: envVars.LOG_LEVEL,
+        path: envVars.LOG_PATH
+      }
     }
   };
 }
