@@ -51,11 +51,11 @@ function createServer(koa, config, logger) {
   };
 
   const start = (beforeStart) => {
-    return beforeStart ? beforeStart().then(() => { return listen(); }) : listen();
+    return beforeStart ? beforeStart(app, config, logger).then(() => { return listen(); }) : listen();
   };
 
   const stop = (beforeStop) => {
-    return beforeStop ? beforeStop().then(() => { return close(); }) : close();
+    return beforeStop ? beforeStop(server, logger).then(() => { return close(); }) : close();
   };
 
   return {
