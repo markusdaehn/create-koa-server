@@ -1,6 +1,6 @@
 {
   "name": "create-koa-server",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Koa API/WEB server",
   "main": "./server",
   "scripts": {
