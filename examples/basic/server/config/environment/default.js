@@ -4,7 +4,7 @@ module.exports = function create(envVars) {
 
   return {
     server: {
-      env: envVars.NODE_ENV,
+      env: 'default',
 
       ip: envVars.IP,
       port: envVars.PORT,
