@@ -1,10 +1,11 @@
-module.exports = function create(createEnv, merge, env) {
+module.exports = function create(createEnv, deepMerge, env) {
   const DEFAULT_CONFIG = 'default';
 
   let defaultConfig = createEnv(DEFAULT_CONFIG);
   let envConfig = createEnv(env);
 
-  let config = merge(defaultConfig, envConfig || {});
+  let config = deepMerge(defaultConfig, envConfig || {});
 
+  console.log('###config', config)
   return config;
 }
