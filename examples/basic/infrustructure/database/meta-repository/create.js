@@ -5,7 +5,7 @@ module.exports = function create(config, logger) {
 }
 
 
-module.exports.get = function get(config, logger){
+function get(config, logger){
   logger.info('infrustructure.database.meta-repository > <');
 
   return {
