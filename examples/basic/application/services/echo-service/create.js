@@ -6,7 +6,7 @@ module.exports = function create(curry, createMetaRepo, config, logger) {
 
   logger.info('application.services.echo-service.create <');
   return {
-     echo: curry(echo)(config, logger, metaRepo)
+     echo: curry(echo)(metaRepo, config, logger)
   };
 }
 
