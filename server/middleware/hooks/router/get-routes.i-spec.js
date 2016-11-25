@@ -17,12 +17,14 @@ describe('server middleware hooks router get-routes -- integration', () => {
   let routes;
   let routesResult;
   let logger;
+  let config;
 
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     get = sinon.stub();
     logger = createLogger(sandbox);
+    config = {app: {name: 'test-app'}};
   });
 
   afterEach(() => {
@@ -32,17 +34,18 @@ describe('server middleware hooks router get-routes -- integration', () => {
   [ROOT_SLASH, ROOT_NOSLASH].forEach((root) => {
     context(`when passed the following root '${root}'`, () => {
       it(`should call require with ${EXPECTED_ROUTE_PATH}`, () => {
-        routesResult = getRoutes(get, glob, path, {root}, logger);
+        routesResult = getRoutes(get, glob, path, {root, config}, logger);
+        console.log('routesResult', routesResult)
         assert.equal(get.args[0][0], EXPECTED_ROUTE_PATH, 'Did not call require with the correct route path');
       });
 
       it(`should return array of routes with length ${EXPECTED_ROUTES_LEN}`, () => {
-        routesResult = getRoutes(require, glob, path, {root}, logger);
+        routesResult = getRoutes(require, glob, path, {root, config}, logger);
         assert.equal(routesResult.length, EXPECTED_ROUTES_LEN, `The get-routes did not return an array with length ${EXPECTED_ROUTES_LEN}`);
       });
 
       it('should return an array of items with verb, uriTemplate, and endpoint properties defined', () => {
-        routesResult = getRoutes(require, glob, path, {root}, logger);
+        routesResult = getRoutes(require, glob, path, {root, config}, logger);
         routesResult.forEach((route) => {
           assert.isString(route.verb, 'The routes verb was not a string');
           assert.isString(route.uriTemplate, 'The routes uriTemplate was not a string');

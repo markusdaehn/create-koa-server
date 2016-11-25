@@ -6,6 +6,5 @@ module.exports = function create(createEnv, deepMerge, env) {
 
   let config = deepMerge(defaultConfig, envConfig || {});
 
-  console.log('###config', config)
   return config;
 }

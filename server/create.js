@@ -17,8 +17,8 @@ function createServer(koa, config, logger) {
 
   const { ip, port, root, env = app.env } = config.server;
 
-  const SERVER_LISTENING_MSG = `Koa server listening on ${ip}:${port} in ${env} mode`;
-  const SERVER_CLOSED_MSG = `Koa server closed on ${ip}:${port} in ${env} mode`;
+  const SERVER_LISTENING_MSG = `Koa server listening on ${ip || ''}:${port} in ${env} mode`;
+  const SERVER_CLOSED_MSG = `Koa server closed on ${ip || ''}:${port} in ${env} mode`;
 
   let server = null;
   const listen = () => {
@@ -59,6 +59,9 @@ function createServer(koa, config, logger) {
   };
 
   return {
+    get instance() {
+      return server;
+    },
     root,
     config,
 

@@ -1,4 +1,4 @@
-module.exports = function createRoute (log) {
+module.exports = function createRoute (log, config, logger) {
   return {
     verb: 'get',
     uriTemplate: '/entry',

@@ -1,4 +1,4 @@
-// @NOTE Do synchronouse things like require newrelic before server is started up
+// @NOTE Do synchronous things like require newrelic before server is started up
 const server = require('./server');
 
 
@@ -9,6 +9,7 @@ if(!module.parent) {
 
 function beforeStart (app, config, logger) {
   logger.info(`server.beforeStart > : setting up ${config.app.name}`);
+
   // @NOTE: Write code you want to execute before server starts
 
   logger.info('server.beforeStart <');
