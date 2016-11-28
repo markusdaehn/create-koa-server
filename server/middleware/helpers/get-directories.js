@@ -2,7 +2,7 @@ module.exports = function getDirectories(fs, path, folder, server, logger) {
   const middlewaresPath = path.join(server.root, folder);
   logger.info(`server.middlware.helpers.get-directories > : getting directories for directory ${middlewaresPath}`);
 
-  const files = fs.readdirSync(middlewaresPath);
+  const files = fs.statSync(middlewaresPath) ? fs.readdirSync(middlewaresPath) : [];
   logger.debug(`server.middlware.helpers.get-directories: found ${files.length} files`)
 
   const directories = files.map((file) => {

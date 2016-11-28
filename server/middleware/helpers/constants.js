@@ -1,4 +1,4 @@
 module.exports = Object.freeze({
   PLUGINS_FOLDER: '/middleware/plugins',
-  ROUTER_HOOKS_FOLDER: '/middleware/router/hooks'
+  HOOKS_ROUTER_FOLDER: '/middleware/hooks/router'
 });
