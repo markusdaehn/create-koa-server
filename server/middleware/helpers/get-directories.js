@@ -1,9 +1,8 @@
 module.exports = function getDirectories(fs, path, folder, server, logger) {
   const middlewaresPath = path.join(server.root, folder);
-  logger.info(`server.middlware.helpers.get-directories > : getting directories for directory ${middlewaresPath}`);
+  logger.info(`server.middlware.helpers.get-directories > : getting directories for folder ${middlewaresPath}`);
 
-  const files = fs.statSync(middlewaresPath) ? fs.readdirSync(middlewaresPath) : [];
-  logger.debug(`server.middlware.helpers.get-directories: found ${files.length} files`)
+  const files = getFiles(fs, server, logger, middlewaresPath);
 
   const directories = files.map((file) => {
     logger.debug(`server.middlware.helpers.get-directories: joining directory ${middlewaresPath} and file ${file}`);
@@ -19,4 +18,20 @@ module.exports = function getDirectories(fs, path, folder, server, logger) {
 
   logger.info(`server.middlware.helpers.get-directories < : returning directories ${directories.map((dir) => { return dir.path; })}`);
   return directories || []
+}
+
+function getFiles(fs, server, logger, middlewaresPath) {
+  logger.info(`server.middlware.helpers.get-files > : getting files`);
+
+  let files = [];
+
+  try {
+    files = fs.readdirSync(middlewaresPath);
+    logger.debug(`server.middlware.helpers.get-files: found ${files.length} files`);
+  } catch(e) {
+    //@NOTE: Could be no folder, so it is ok.
+    logger.debug('server.middlware.helpers.get-files: ', {exception: e});
+  }
+
+  return files
 }
