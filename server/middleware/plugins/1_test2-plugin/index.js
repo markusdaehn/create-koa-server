@@ -1,5 +1,5 @@
 module.exports = {
-  register: (config, logger) => {
+  register: (server, logger) => {
     logger.info('0_test2-plugin called');
   }
 }

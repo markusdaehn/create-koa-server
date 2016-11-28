@@ -1,4 +1,4 @@
-const errorHandler = require('./errorHandler');
+const errorHandler = require('./error-handler');
 const router = require('./router');
 const hooks = {
   errorHandler,

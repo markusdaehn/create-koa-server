@@ -1,6 +1,7 @@
-module.exports = function register(initRoutes, server, logger) {
+module.exports = function register(router, initRoutes, server, logger) {
   logger.info(`register > : registering router middleware (root=${server.root})`);
-  let router = initRoutes(server, logger);
+
+  initRoutes(router, server, logger);
 
   server.use(router.routes());
   server.use(router.allowedMethods());

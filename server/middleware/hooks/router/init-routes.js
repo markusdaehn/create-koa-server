@@ -1,5 +1,5 @@
 
-module.exports = function initRoutes(router, getRoutes, server, logger) {
+module.exports = function initRoutes(getRoutes, router, server, logger) {
   logger.info(`initRoutes > : root=${server.root}`);
 
   getRoutes(server, logger).forEach(function(route) {
