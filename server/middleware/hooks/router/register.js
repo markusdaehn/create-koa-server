@@ -1,5 +1,5 @@
 module.exports = function register(router, initRoutes, registerHooks, server, logger) {
-  logger.info(`register > : registering router middleware (root=${server.root})`);
+  logger.info(`server.middleware.hooks.router.register > : registering router middleware (root=${server.root})`);
 
   registerHooks(router, server, logger);
   initRoutes(router, server, logger);
@@ -7,6 +7,6 @@ module.exports = function register(router, initRoutes, registerHooks, server, lo
   server.use(router.routes());
   server.use(router.allowedMethods());
 
-  logger.info('register <');
+  logger.info('server.middleware.hooks.router.register <');
   return router;
 }

@@ -1,8 +1,8 @@
 module.exports = function getRoutes(get, glob, path, server, logger) {
-  logger.info(`getRoutes > : getting routes (root=${server.root})`);
+  logger.info(`server.middleware.hooks.router.getRoutes > : getting routes (root=${server.root})`);
 
   const routes = glob.sync(path.resolve(server.root, './routes/**/index.js'), { cwd: server.root, ignore:['./*']}).map(function(file) {
-    logger.debug(`getRoutes: getting route: ${file}`);
+    logger.debug(`server.middleware.hooks.router.getRoutes: getting route: ${file}`);
 
     let route = get(file);
 
@@ -10,6 +10,6 @@ module.exports = function getRoutes(get, glob, path, server, logger) {
     return typeof route === 'function' ? route(server.config, logger) : route;
   });
 
-  logger.info('getRoutes <');
+  logger.info('server.middleware.hooks.router.getRoutes <');
   return routes;
 }
