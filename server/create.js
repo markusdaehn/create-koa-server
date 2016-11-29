@@ -1,4 +1,6 @@
 module.exports = function (koa, middleware, config, logger) {
+  logger.trace('server.create > : creating server');
+
   const server = createServer(koa, config, logger);
   const { hooks, plugins } = middleware;
 
@@ -8,6 +10,7 @@ module.exports = function (koa, middleware, config, logger) {
 
   hooks.router.register(server, logger);
 
+  logger.trace('server.create < ');
   return server;
 }
 

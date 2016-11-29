@@ -1,6 +1,6 @@
 module.exports = function getDirectories(fs, path, folder, server, logger) {
   const middlewaresPath = path.join(server.root, folder);
-  logger.info(`server.middlware.helpers.get-directories > : getting directories for folder ${middlewaresPath}`);
+  logger.trace(`server.middlware.helpers.get-directories > : getting directories for folder ${middlewaresPath}`);
 
   const files = getFiles(fs, server, logger, middlewaresPath);
 
@@ -16,12 +16,12 @@ module.exports = function getDirectories(fs, path, folder, server, logger) {
     };
   });
 
-  logger.info(`server.middlware.helpers.get-directories < : returning directories ${directories.map((dir) => { return dir.path; })}`);
+  logger.trace(`server.middlware.helpers.get-directories < : returning directories ${directories.map((dir) => { return dir.path; })}`);
   return directories || []
 }
 
 function getFiles(fs, server, logger, middlewaresPath) {
-  logger.info(`server.middlware.helpers.get-files > : getting files`);
+  logger.trace(`server.middlware.helpers.get-files > : getting files`);
 
   let files = [];
 
@@ -33,5 +33,6 @@ function getFiles(fs, server, logger, middlewaresPath) {
     logger.debug('server.middlware.helpers.get-files: ', {exception: e});
   }
 
+  logger.trace('server.middlware.helpers.get-files <');
   return files
 }

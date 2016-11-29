@@ -83,6 +83,7 @@ function createLogger(sandbox) {
     error: sandbox.stub(),
     debug: sandbox.stub(),
     info: sandbox.stub(),
-    warn: sandbox.stub()
+    warn: sandbox.stub(),
+    trace: sandbox.stub()
   }
 }

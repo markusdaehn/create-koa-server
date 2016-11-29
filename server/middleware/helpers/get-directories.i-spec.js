@@ -39,6 +39,7 @@ describe('server middleware plugins get-directories -- integration', () => {
 function createLogger(sandbox) {
   return {
     info: sandbox.spy(),
-    debug: sandbox.spy()
+    debug: sandbox.spy(),
+    trace: sandbox.spy()
   };
 }

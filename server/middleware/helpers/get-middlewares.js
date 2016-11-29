@@ -1,7 +1,7 @@
 module.exports = getMiddlwares;
 
 function getMiddlwares(getDirectories, toCamelCase, server, logger) {
-  logger.info(`server.middlware.helpers.get-middlewares > : getting middlewares`);
+  logger.trace(`server.middlware.helpers.get-middlewares > : getting middlewares`);
 
   const directories = getDirectories(server, logger);
 
@@ -15,6 +15,6 @@ function getMiddlwares(getDirectories, toCamelCase, server, logger) {
     middlewares[propName] = require(directory.path);
   });
 
-  logger.info(`server.middlware.helpers.get-middlewares < : returning middlewares ${middlewareNames}`)
+  logger.trace(`server.middlware.helpers.get-middlewares < : returning middlewares ${middlewareNames}`)
   return middlewares;
 }

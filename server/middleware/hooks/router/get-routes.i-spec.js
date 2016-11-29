@@ -68,6 +68,7 @@ function createLogger(sandbox) {
   return {
     error: sandbox.stub(),
     debug: sandbox.stub(),
-    info: sandbox.stub()
+    info: sandbox.stub(),
+    trace: sandbox.stub()
   };
 }
