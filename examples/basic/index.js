@@ -8,10 +8,10 @@ if(!module.parent) {
 }
 
 function beforeStart (app, config, logger) {
-  logger.info(`server.beforeStart > : setting up ${config.app.name}`);
+  logger.trace(`server.beforeStart > : setting up ${config.app.name}`);
 
   // @NOTE: Write code you want to execute before server starts
 
-  logger.info('server.beforeStart <');
+  logger.trace('server.beforeStart <');
   return Promise.resolve();
 }

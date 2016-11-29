@@ -6,7 +6,7 @@ module.exports = function create(config, logger) {
 
 
 function get(config, logger){
-  logger.info('infrustructure.database.meta-repository > <');
+  logger.trace('infrustructure.database.meta-repository > <');
 
   return {
     version: '1.0.1',
