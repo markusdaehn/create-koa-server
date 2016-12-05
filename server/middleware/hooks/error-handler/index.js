@@ -1,6 +1,13 @@
 const R = require('ramda');
-const handleError = require('./handle');
-const createErrorHandler = R.curry(require('./create'))(handleError);
+const fs = require('fs');
+const path = require('path');
+const constants = require('../../helpers/constants');
+const toCamelCase = require('../../helpers/to-camel-case');
+const getDirectories = R.curry(require('../../helpers/get-directories'))(fs, path, constants.HOOKS_ERROR_HANDLER_FOLDER);
+const getHooks = R.curry(require('../../helpers/get-middlewares'))(getDirectories, toCamelCase);
+const handleError = require('./handle-error');
+const getHandler = R.curry(require('./get-handler'))(getHooks, handleError);
+const createErrorHandler = R.curry(require('./create'))(getHandler);
 
 module.exports = {
   register: R.curry(require('./register'))(createErrorHandler)
