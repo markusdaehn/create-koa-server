@@ -3,7 +3,7 @@ module.exports = function getHandler(getObjectKeys, getHooks, defaultHandler, se
   let hookNames = getObjectKeys(hooks);
 
   if(hookNames.length > 0) {
-    logger.info({func: 'server.middleware.hooks.error-handler.get-handler'}, `${hooksNames[0]} error handler returned`);
+    logger.info({func: 'server.middleware.hooks.error-handler.get-handler'}, `${hookNames[0]} error handler returned`);
   } else {
     logger.info({func: 'server.middlware.hooks.error-handler.get-handler'}, 'Default error handler returned');
     return defaultHandler;
