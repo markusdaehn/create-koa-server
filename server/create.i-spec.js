@@ -19,11 +19,11 @@ describe('server create -- unit', () => {
 
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      apps = [createApp(sandbox, httpServer)];
-      mounts = createMounts(sandbox, apps);
       logger = createLogger(sandbox);
       httpServer = createHttpServer(sandbox);
+      apps = [createApp(sandbox, httpServer)];
       app = createApp(sandbox, httpServer);
+      mounts = createMounts(sandbox, apps);
       Koa =  sinon.spy(function() { return app });
       port = 8080;
       ip = '156.129.55.01';
@@ -46,21 +46,8 @@ describe('server create -- unit', () => {
     });
 
     it('should define the server root path', () => {
-      assert.isDefined(server.root, 'The server root path was not set');
-    });
 
-    it('should call the koa constructor once', () => {
-      assert.isTrue(Koa.calledOnce, 'The Koa constructor was not called once');
     });
-
-    it('should set the server.config to the config passed into the create method', () => {
-      assert.deepEqual(server.config, config, 'The server config did not equal to the expected config');
-    });
-
-    it('should call mounts register once', () => {
-      assert.isTrue(mounts.register.calledOnce, 'The mounts.register was not call once');
-    });
-
   });
 });
 

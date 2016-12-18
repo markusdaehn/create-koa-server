@@ -2,13 +2,13 @@
 const R = require('ramda');
 const fs = require('fs');
 const path = require('path');
-const toCamelCase = require('./to-camel-case');
+const toCamelCase = require('../helpers/to-camel-case');
 const getMiddlewares = require('./get-middlewares');
-const constants = require('./constants');
+const constants = require('../helpers/constants');
 const sinon = require('sinon');
 const { assert } = require('chai');
 
-describe('middleware helpers get-middlewares -- integration', () => {
+describe('server middleware get-middlewares -- integration', () => {
   const expected_plugin_middleware = [
     '0_test1Plugin',
     '1_test2Plugin'
@@ -24,7 +24,7 @@ describe('middleware helpers get-middlewares -- integration', () => {
 
   beforeEach(() =>{
     sandbox = sinon.sandbox.create();
-    server = {root: path.resolve(__dirname, '../..')};
+    server = {root: path.resolve(__dirname, '../../../..')};
     logger = createLogger(sandbox);
   });
 
@@ -34,7 +34,7 @@ describe('middleware helpers get-middlewares -- integration', () => {
 
   context('when called with plugin folder', () => {
     beforeEach(() =>{
-      getDirectories = R.curry(require('./get-directories'))(fs, path, constants.PLUGINS_FOLDER);
+      getDirectories = R.curry(require('../helpers/get-directories'))(fs, path);
     });
 
     afterEach(() => {
@@ -42,14 +42,14 @@ describe('middleware helpers get-middlewares -- integration', () => {
     });
 
     it('should return the correct plugins', () => {
-      let plugins = getMiddlewares(getDirectories, toCamelCase, server, logger);
+      let plugins = getMiddlewares(require, getDirectories, toCamelCase, path.join(server.root, constants.PLUGINS_FOLDER), logger);
       Object.keys(plugins).forEach((plugin) => {
         assert.isTrue(expected_plugin_middleware.includes(plugin));
       });
     });
     context('when called with hooks router folder', () => {
       beforeEach(() =>{
-        getDirectories = R.curry(require('./get-directories'))(fs, path, constants.HOOKS_ROUTER_FOLDER);
+        getDirectories = R.curry(require('../helpers/get-directories'))(fs, path);
       });
 
       afterEach(() => {
@@ -57,7 +57,7 @@ describe('middleware helpers get-middlewares -- integration', () => {
       });
 
       it('should return the correct plugins', () => {
-        let plugins = getMiddlewares(getDirectories, toCamelCase, server, logger);
+        let plugins = getMiddlewares(require, getDirectories, toCamelCase, path.join(server.root, constants.HOOKS_ROUTER_FOLDER), logger);
         Object.keys(plugins).forEach((plugin) => {
           assert.isTrue(expected_router_hooks_middleware.includes(plugin));
         });

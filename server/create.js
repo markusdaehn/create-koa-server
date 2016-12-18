@@ -1,22 +1,15 @@
-module.exports = function (koa, middleware, config, logger) {
+module.exports = function (Koa, mounts, config, logger) {
   logger.trace('server.create > : creating server');
+  const server = createServer(Koa, config, logger);
 
-  const server = createServer(koa, config, logger);
-  const { hooks, plugins } = middleware;
-
-  hooks.errorHandler.register(server, logger);
-
-  plugins.register(server, logger);
-
-  hooks.router.register(server, logger);
+  server.mounts = mounts.register(server, logger);
 
   logger.trace('server.create < ');
   return server;
 }
 
-
-function createServer(koa, config, logger) {
-  const app = new koa();
+function createServer(Koa, config, logger) {
+  const app = new Koa();
 
   const { ip, port, root, env = app.env } = config.server;
 

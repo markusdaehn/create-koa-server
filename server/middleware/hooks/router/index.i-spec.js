@@ -5,12 +5,12 @@ const path = require('path');
 
 describe('server middleware hooks router -- integration', () => {
   let sandbox;
-  let server;
+  let app;
   let logger;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    server = createServer(sandbox);
+    app = createApp(sandbox);
     logger = createLogger(sandbox);
   });
 
@@ -18,20 +18,20 @@ describe('server middleware hooks router -- integration', () => {
     sandbox.restore();
   });
 
-  context('when calling register with the server and logger', () => {
-    it('should call server with routes', () => {
-      routerMiddleware.register(server, logger);
+  context('when calling register with the app and logger', () => {
+    it('should call app with routes', () => {
+      routerMiddleware.register(app, logger);
 
-      assert.equal(typeof server.use.args[1][0], 'function', 'The first call to server.use was not a fucntion');
-      assert.equal(server.use.args[1][0].name, 'allowedMethods', 'The second call to server.use was not the allowMethods funxtion');
+      assert.equal(typeof app.use.args[1][0], 'function', 'The first call to app.use was not a fucntion');
+      assert.equal(app.use.args[1][0].name, 'allowedMethods', 'The second call to app.use was not the allowMethods funxtion');
     });
   });
 });
 
-function createServer(sandbox) {
+function createApp(sandbox) {
   return {
     use: sandbox.stub(),
-    root: path.resolve(__dirname, '../../..'),
+    root: path.resolve(__dirname, '../../../../tests/scenarios/basic-server'),
     config: { app: { name: 'test-app' } }
   };
 }

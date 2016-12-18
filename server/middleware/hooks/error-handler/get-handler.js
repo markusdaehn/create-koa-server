@@ -1,5 +1,5 @@
-module.exports = function getHandler(getObjectKeys, getHooks, defaultHandler, server, logger) {
-  let hooks = getHooks(server, logger);
+module.exports = function getHandler(getObjectKeys, getHooks, defaultHandler, handlerDir, logger) {
+  let hooks = getHooks(handlerDir, logger);
   let hookNames = getObjectKeys(hooks);
 
   if(hookNames.length > 0) {

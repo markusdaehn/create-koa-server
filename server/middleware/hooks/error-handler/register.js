@@ -1,7 +1,7 @@
-module.exports = function register(create, server, logger) {
+module.exports = function register(create, app, logger) {
   logger.trace('server.middlware.hooks.error-handler.register > : registering error handler');
 
-  server.use(create(server, logger));
+  app.use(create(app, logger));
 
   logger.trace('server.middlware.hooks.error-handler.register <');
 }

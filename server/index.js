@@ -1,7 +1,7 @@
 const R = require('ramda');
-const koa = require('koa');
-const middleware = require('./middleware');
+const Koa = require('koa');
+const mounts = require('./mounts');
 
-const server = R.curry(require('./create'))(koa, middleware);
+const server = R.curry(require('./create'))(Koa, mounts);
 
 module.exports = server;
