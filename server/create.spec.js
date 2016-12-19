@@ -26,17 +26,7 @@ describe('server create -- unit', () => {
       logger = createLogger(sandbox);
       app = createApp(sandbox, httpServer);
       Koa =  sinon.spy(function() { return app });
-      port = 8080;
-      ip = '156.129.55.01';
-      root = path.resolve(__dirname, '../tests/scenarios/basic-server');
-
-      config = {
-        server: {
-          ip,
-          port,
-          root
-        }
-      };
+      config = createConfig();
 
       server = createServer(Koa, mounts, config, logger);
 
@@ -95,4 +85,18 @@ function createLogger(sandbox) {
     warn: sandbox.stub(),
     trace: sandbox.stub()
   }
+}
+
+function createConfig() {
+  let port = 8080;
+  let ip = '156.129.55.01';
+  let root = path.resolve(__dirname, '../tests/scenarios/basic-server');
+
+  return {
+    server: {
+      ip,
+      port,
+      root
+    }
+  };
 }
