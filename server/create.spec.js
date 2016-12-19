@@ -16,13 +16,14 @@ describe('server create -- unit', () => {
     let ip;
     let root;
     let server;
+    let httpServer;
 
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
+      httpServer = createHttpServer(sandbox);
       apps = [createApp(sandbox, httpServer)];
       mounts = createMounts(sandbox, apps);
       logger = createLogger(sandbox);
-      httpServer = createHttpServer(sandbox);
       app = createApp(sandbox, httpServer);
       Koa =  sinon.spy(function() { return app });
       port = 8080;
