@@ -7,8 +7,9 @@ module.exports = function create(createMount, Koa, middleware, config, logger)  
   return app;
 }
 
-module.exports = function createApp(createMount, Koa, config, logger)  {
+function createApp(createMount, Koa, config, logger)  {
   let { root, prefix ='/' } = config;
+
   let instance = new Koa();
   let app = {
     instance,

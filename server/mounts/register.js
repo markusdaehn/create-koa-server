@@ -14,7 +14,7 @@ function getAppConfigs(getMountConfigs, mountsDir, server, logger) {
   if(appConfigs.length === 0) {
     appConfigs.push({
       prefix: '/',
-      path: server.root
+      root: server.root
     });
   }
   return appConfigs;
