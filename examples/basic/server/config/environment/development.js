@@ -5,7 +5,7 @@ module.exports = function() {
     },
     app: {
       logging: {
-        level: 'debug'
+        level: 'trace'
       }
     }
   };
