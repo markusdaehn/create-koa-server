@@ -19,7 +19,7 @@ module.exports = function createApp(createMount, Koa, config, logger)  {
     emit: instance.emit.bind(instance),
 
     register(server, logger) {
-      let mount = createMount(prefix, app);
+      let mount = createMount(prefix, app.instance);
 
       if(typeof mount === 'function') {
         server.use(mount);
