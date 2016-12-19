@@ -22,9 +22,7 @@ function createApp(createMount, Koa, config, logger)  {
     register(server, logger) {
       let mount = createMount(prefix, app.instance);
 
-      if(typeof mount === 'function') {
-        server.use(mount);
-      }
+      server.use(mount);
 
       return app;
     },
