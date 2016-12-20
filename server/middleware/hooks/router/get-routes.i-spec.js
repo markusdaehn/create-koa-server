@@ -14,7 +14,7 @@ describe('server middleware hooks router get-routes -- integration', () => {
   const EXPECTED_ROUTE_PATH = `${ROOT_SLASH}routes/test-route/get/index.js`;
 
   let sandbox;
-  let get;
+  let requireSpy;
   let routes;
   let routesResult;
   let logger;
@@ -23,7 +23,7 @@ describe('server middleware hooks router get-routes -- integration', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    get = sinon.stub();
+    requireSpy = sinon.spy(require);
     logger = createLogger(sandbox);
     config = {app: {name: 'test-app'}};
   });
@@ -35,8 +35,8 @@ describe('server middleware hooks router get-routes -- integration', () => {
   [ROOT_SLASH, ROOT_NOSLASH].forEach((root) => {
     context(`when passed the following root '${root}'`, () => {
       it(`should call require with ${EXPECTED_ROUTE_PATH}`, () => {
-        routesResult = getRoutes(get, glob, path, constants.ROUTES_FOLDER, {root, config}, logger);
-        assert.equal(get.args[0][0], EXPECTED_ROUTE_PATH, 'Did not call require with the correct route path');
+        routesResult = getRoutes(requireSpy, glob, path, constants.ROUTES_FOLDER, {root, config}, logger);
+        assert.equal(requireSpy.args[0][0], EXPECTED_ROUTE_PATH, 'Did not call require with the correct route path');
       });
 
       it(`should return array of routes with length ${EXPECTED_ROUTES_LEN}`, () => {

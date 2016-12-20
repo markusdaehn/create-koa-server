@@ -2,7 +2,6 @@ module.exports = function getDirectories(fs, path, dirPath, logger) {
   logger.trace(`server.middlware.helpers.get-directories > : getting directories for folder ${dirPath}`);
 
   const files = getFiles(fs, dirPath, logger);
-
   const directories = files.map((file) => {
     logger.debug(`server.middlware.helpers.get-directories: joining directory ${dirPath} and file ${file}`);
     return path.join(dirPath, file);

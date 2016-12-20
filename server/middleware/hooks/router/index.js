@@ -12,8 +12,5 @@ const getHooks = R.curry(require('../../get-middlewares'))(getDirectories, toCam
 const registerHooks = R.curry(require('./register-hooks'))(path, getHooks, constants.HOOKS_ROUTER_FOLDER);
 
 module.exports = {
-  register: R.curry(require('./register'))(Router, initRoutes, registerHooks),
-  get instance() {
-    return router;
-  }
+  register: R.curry(require('./register'))(Router, initRoutes, registerHooks)
 };

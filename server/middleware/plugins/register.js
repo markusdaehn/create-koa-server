@@ -7,6 +7,7 @@ module.exports = function register(path, getPlugins, PLUGINS_FOLDER, app, logger
   let plugins = getPlugins(pluginsDir, logger);
 
   Object.keys(plugins).forEach((pluginName)=> {
+    logger.info(`server.middleware.plugins.register: registering plugin ${pluginName}`);
     plugins[pluginName].register(app, logger);
   });
 
