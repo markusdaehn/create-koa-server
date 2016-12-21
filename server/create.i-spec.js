@@ -51,7 +51,7 @@ describe('server create -- unit', () => {
   });
 });
 
-function createAppRegistry(sandbox, apps) {
+function createAppsRegistry(sandbox, apps) {
   return {
     register: sandbox.spy(() => {
       return apps;

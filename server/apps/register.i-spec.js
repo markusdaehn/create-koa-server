@@ -4,7 +4,7 @@ const fs = require('fs');
 const constants = require('../helpers/constants');
 const getDirectories = R.curry(require('../helpers/get-directories'))(fs, path);
 const getAppConfigs = R.curry(require('./get-app-configs'))(path, getDirectories);
-const { create: createApp } = require('../app-factory');
+const { create: createApp } = require('./factory');
 const sinon = require('sinon');
 const { assert } = require('chai');
 
@@ -25,8 +25,8 @@ describe('server apps register -- integration', () => {
     getAppConfigsSpy = sandbox.spy(getAppConfigs);
     logger = createLogger(sandbox);
     server = createServer(sandbox);
-    appsDir =  `${server.root}${constants.MOUNTS_FOLDER}`;
-    register = R.curry(require('./register'))(path, createAppSpy, getAppConfigsSpy, constants.MOUNTS_FOLDER);
+    appsDir =  `${server.root}${constants.APPS_FOLDER}`;
+    register = R.curry(require('./register'))(path, createAppSpy, getAppConfigsSpy, constants.APPS_FOLDER);
     register(server, logger);
   });
 
