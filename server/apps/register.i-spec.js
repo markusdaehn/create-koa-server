@@ -3,30 +3,30 @@ const path = require('path');
 const fs = require('fs');
 const constants = require('../helpers/constants');
 const getDirectories = R.curry(require('../helpers/get-directories'))(fs, path);
-const getMountConfigs = R.curry(require('./get-mount-configs'))(path, getDirectories);
+const getAppConfigs = R.curry(require('./get-app-configs'))(path, getDirectories);
 const { create: createApp } = require('../app-factory');
 const sinon = require('sinon');
 const { assert } = require('chai');
 
 
 
-describe('server mounts register -- integration', () => {
+describe('server apps register -- integration', () => {
   let register;
   let sandbox;
   let createAppSpy;
-  let getMountConfigsSpy;
-  let mountsDir;
+  let getAppConfigsSpy;
+  let appsDir;
   let server;
   let logger;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     createAppSpy = sandbox.spy(createApp);
-    getMountConfigsSpy = sandbox.spy(getMountConfigs);
+    getAppConfigsSpy = sandbox.spy(getAppConfigs);
     logger = createLogger(sandbox);
     server = createServer(sandbox);
-    mountsDir =  `${server.root}${constants.MOUNTS_FOLDER}`;
-    register = R.curry(require('./register'))(path, createAppSpy, getMountConfigsSpy, constants.MOUNTS_FOLDER);
+    appsDir =  `${server.root}${constants.MOUNTS_FOLDER}`;
+    register = R.curry(require('./register'))(path, createAppSpy, getAppConfigsSpy, constants.MOUNTS_FOLDER);
     register(server, logger);
   });
 
@@ -35,15 +35,15 @@ describe('server mounts register -- integration', () => {
   });
 
   context('when register is called', () => {
-    it(`should call getMountConfigs with ${mountsDir}`, () => {
-      assert.equal(getMountConfigsSpy.args[0][0], mountsDir, 'get-mount-configs was not called with the expected mounts directory');
+    it(`should call getAppConfigs with ${appsDir}`, () => {
+      assert.equal(getAppConfigsSpy.args[0][0], appsDir, 'get-app-configs was not called with the expected apps directory');
     });
   });
 });
 
 function createServer(sandbox) {
   return {
-    root: path.resolve(__dirname, '../../tests/scenarios/mounted-server'),
+    root: path.resolve(__dirname, '../../tests/scenarios/multiple-apps-server'),
     use: sandbox.stub()
   };
 }

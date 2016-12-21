@@ -7,7 +7,7 @@ const path = require('path');
 describe('server create -- unit', () => {
   context('when create is called', () => {
     let sandbox;
-    let mounts;
+    let appsRegistry;
     let apps;
     let logger;
     let app;
@@ -22,13 +22,13 @@ describe('server create -- unit', () => {
       sandbox = sinon.sandbox.create();
       httpServer = createHttpServer(sandbox);
       apps = [createApp(sandbox, httpServer)];
-      mounts = createMounts(sandbox, apps);
+      appsRegistry = createAppsRegistry(sandbox, apps);
       logger = createLogger(sandbox);
       app = createApp(sandbox, httpServer);
       Koa =  sinon.spy(function() { return app });
       config = createConfig();
 
-      server = createServer(Koa, mounts, config, logger);
+      server = createServer(Koa, appsRegistry, config, logger);
 
     });
 
@@ -48,14 +48,14 @@ describe('server create -- unit', () => {
       assert.deepEqual(server.config, config, 'The server config did not equal to the expected config');
     });
 
-    it('should call mounts register once', () => {
-      assert.isTrue(mounts.register.calledOnce, 'The mounts.register was not call once');
+    it('should call apps register once', () => {
+      assert.isTrue(appsRegistry.register.calledOnce, 'The apps.register was not call once');
     });
 
   });
 });
 
-function createMounts(sandbox, apps) {
+function createAppsRegistry(sandbox, apps) {
   return {
     register: sandbox.spy(() => {
       return apps;

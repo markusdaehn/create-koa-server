@@ -7,8 +7,8 @@ const path = require('path');
 describe('server create -- unit', () => {
   context('when create is called', () => {
     let sandbox;
-    let mounts;
     let apps;
+    let appsRegistry;
     let logger;
     let app;
     let Koa;
@@ -23,7 +23,7 @@ describe('server create -- unit', () => {
       httpServer = createHttpServer(sandbox);
       apps = [createApp(sandbox, httpServer)];
       app = createApp(sandbox, httpServer);
-      mounts = createMounts(sandbox, apps);
+      appsRegistry = createAppsRegistry(sandbox, apps);
       Koa =  sinon.spy(function() { return app });
       port = 8080;
       ip = '156.129.55.01';
@@ -37,7 +37,7 @@ describe('server create -- unit', () => {
         }
       };
 
-      server = createServer(Koa, mounts, config, logger);
+      server = createServer(Koa, appsRegistry, config, logger);
 
     });
 
@@ -51,7 +51,7 @@ describe('server create -- unit', () => {
   });
 });
 
-function createMounts(sandbox, apps) {
+function createAppRegistry(sandbox, apps) {
   return {
     register: sandbox.spy(() => {
       return apps;
