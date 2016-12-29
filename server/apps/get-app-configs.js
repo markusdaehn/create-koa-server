@@ -4,7 +4,7 @@ module.exports = function getAppConfigs(path, getDirectories, appsDir, server, l
     return {
       prefix: path.join('/', directory.name),
       root: directory.path
-    }
+    };
   });
 
   if(appConfigs.length === 0) {

@@ -2,9 +2,9 @@
 const R = require('ramda');
 const fs = require('fs');
 const path = require('path');
-const toCamelCase = require('../helpers/to-camel-case');
+const toCamelCase = require('../utils/to-camel-case');
 const getMiddlewares = require('./get-middlewares');
-const constants = require('../helpers/constants');
+const constants = require('..//constants');
 const sinon = require('sinon');
 const { assert } = require('chai');
 
@@ -34,7 +34,7 @@ describe('server middleware get-middlewares -- integration', () => {
 
   context('when called with plugin folder', () => {
     beforeEach(() =>{
-      getDirectories = R.curry(require('../helpers/get-directories'))(fs, path);
+      getDirectories = R.curry(require('../utils/get-directories'))(fs, path);
     });
 
     afterEach(() => {
@@ -49,7 +49,7 @@ describe('server middleware get-middlewares -- integration', () => {
     });
     context('when called with hooks router folder', () => {
       beforeEach(() =>{
-        getDirectories = R.curry(require('../helpers/get-directories'))(fs, path);
+        getDirectories = R.curry(require('../utils/get-directories'))(fs, path);
       });
 
       afterEach(() => {

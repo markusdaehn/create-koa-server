@@ -1,5 +1,5 @@
 const getDirectories = require('./get-directories');
-const constants = require('./constants');
+const constants = require('../constants');
 const fs = require('fs');
 const path = require('path');
 const sinon = require('sinon');

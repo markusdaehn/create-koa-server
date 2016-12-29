@@ -3,8 +3,8 @@ const R = require('ramda');
 const path = require('path');
 const fs = require('fs');
 const sinon = require('sinon');
-const constants = require('../helpers/constants');
-const getDirectories = R.curry(require('../helpers/get-directories'))(fs, path);
+const constants = require('../constants');
+const getDirectories = R.curry(require('../utils/get-directories'))(fs, path);
 const getAppConfigs = R.curry(require('./get-app-configs'))(path, getDirectories);
 const { assert } = require('chai');
 

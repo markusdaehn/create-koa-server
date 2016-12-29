@@ -3,5 +3,8 @@ module.exports = Object.freeze({
   HOOKS_ROUTER_FOLDER: '/middleware/hooks/router',
   HOOKS_ERROR_HANDLER_FOLDER: '/middleware/hooks/error-handler',
   ROUTES_FOLDER: '/routes',
-  APPS_FOLDER: '/apps'
+  APPS_FOLDER: '/apps',
+  CONFIG_FOLDER: '/config',
+  CONFIG_ENV_FOLDER: '/config/environment',
+  BASE_CONFIG_NAME: 'base'
 });

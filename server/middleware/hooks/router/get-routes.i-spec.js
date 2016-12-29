@@ -1,4 +1,4 @@
-const constants = require('../../../helpers/constants');
+const constants = require('../../..//constants');
 const getRoutes = require('./get-routes');
 const path = require('path');
 const glob = require('glob');

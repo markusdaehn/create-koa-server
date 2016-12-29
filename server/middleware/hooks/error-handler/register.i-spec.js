@@ -1,9 +1,9 @@
 const R = require('ramda');
 const fs = require('fs');
 const path = require('path');
-const constants = require('../../../helpers/constants');
-const toCamelCase = require('../../../helpers/to-camel-case');
-const getDirectories = R.curry(require('../../../helpers/get-directories'))(fs, path);
+const constants = require('../../../constants');
+const toCamelCase = require('../../../utils/to-camel-case');
+const getDirectories = R.curry(require('../../../utils/get-directories'))(fs, path);
 const getHooks = R.curry(require('../../get-middlewares'))(require, getDirectories, toCamelCase);
 const handleError = require('./handle-error');
 const sinon = require('sinon');
