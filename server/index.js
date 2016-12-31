@@ -1,6 +1,6 @@
 const R = require('ramda');
 const Koa = require('koa');
-const apps = require('./apps');
+const apps = require('./app');
 
 const server = R.curry(require('./create'))(Koa, apps);
 
