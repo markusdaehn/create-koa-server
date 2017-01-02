@@ -28,7 +28,7 @@ describe('server create -- unit', () => {
       Koa =  sinon.spy(function() { return app });
       config = createConfig();
 
-      server = createServer(Koa, appsRegistry, config, logger);
+      server = createServer(Koa, appsRegistry, {config, logger});
 
     });
 

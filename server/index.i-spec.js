@@ -14,7 +14,7 @@ describe('server -- integration', () => {
 
   context('when calling the server.create method', () => {
     it('should create server', () => {
-      server = require('./')(config, logger);
+      server = require('./')({config, logger});
     });
   });
 });

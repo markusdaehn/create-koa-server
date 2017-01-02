@@ -1,8 +1,9 @@
-module.exports = function (Koa, apps, config, logger) {
+module.exports = function (Koa, app, options) {
+  let { config, logger } = options;
   logger.trace('server.create > : creating server');
   const server = createServer(Koa, config, logger);
 
-  apps.register(server, logger);
+  app.register(server, logger);
 
   logger.trace('server.create < ');
   return server;
@@ -60,12 +61,14 @@ function createServer(Koa, config, logger) {
     appServer,
     root,
     config,
+    logger,
 
     start,
     stop,
 
     use: appServer.use.bind(appServer),
     emit: appServer.emit.bind(appServer),
+
     env
   };
 }

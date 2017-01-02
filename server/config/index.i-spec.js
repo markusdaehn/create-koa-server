@@ -3,13 +3,13 @@ const path = require('path');
 
 describe('server config -- integration', () => {
   context('when calling index', () => {
-    const root = path.resolve(__dirname, '../../tests/scenarios/basic-server');
+    const serverRoot = path.resolve(__dirname, '../../tests/scenarios/basic-server');
     let config;
     let logger;
 
     beforeEach(() => {
       logger = createLogger();
-      config = require('./index')(logger, process.env, root);
+      config = require('./index')(logger, process.env, serverRoot);
     });
 
     it(`should return an object with a property server.env equal to '${process.env.NODE_ENV}'`, () => {

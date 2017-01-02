@@ -37,7 +37,7 @@ describe('server create -- unit', () => {
         }
       };
 
-      server = createServer(Koa, appsRegistry, config, logger);
+      server = createServer(Koa, appsRegistry, {config, logger});
 
     });
 
