@@ -3,6 +3,7 @@ const createServer = require('./create.js');
 const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
+const nullableLogger = require('./utils/nullable-logger');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -28,7 +29,7 @@ describe('server create -- unit', () => {
       Koa =  sinon.spy(function() { return app });
       config = createConfig();
 
-      server = createServer(Koa, appsRegistry, {config, logger});
+      server = createServer(Koa, appsRegistry, nullableLogger, {config, logger});
 
     });
 
@@ -49,7 +50,8 @@ describe('server create -- unit', () => {
     });
 
     it('should call apps register once', () => {
-      assert.isTrue(appsRegistry.register.calledOnce, 'The apps.register was not call once');
+      server.start();
+      assert.isTrue(appsRegistry.createApps.calledOnce, 'The apps.register was not call once');
     });
 
   });
@@ -57,7 +59,7 @@ describe('server create -- unit', () => {
 
 function createAppsRegistry(sandbox, apps) {
   return {
-    register: sandbox.spy(() => {
+    createApps: sandbox.spy(() => {
       return apps;
     })
   };
@@ -67,7 +69,8 @@ function createApp(sandbox, httpServer) {
     use: sandbox.stub(),
     emit: sandbox.stub(),
     env: 'test',
-    listen: sandbox.stub().returns(httpServer)
+    listen: sandbox.stub().returns(httpServer),
+    register: sandbox.stub()
   };
 }
 

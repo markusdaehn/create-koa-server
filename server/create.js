@@ -1,29 +1,20 @@
-module.exports = function (Koa, app, options) {
-  let { config, logger } = options;
-  logger.trace('server.create > : creating server');
-  const server = createServer(Koa, config, logger);
+module.exports = function createServer(Koa, app, nullableLogger, options) {
+  let { config, logger = nullableLogger} = options;
 
-  app.register(server, logger);
-
-  logger.trace('server.create < ');
-  return server;
-}
-
-function createServer(Koa, config, logger) {
   const appServer = new Koa();
-  const { ip, port, root, env = appServer.env } = config.server;
-
-  const SERVER_LISTENING_MSG = `Koa server listening on ${ip || ''}:${port} in ${env} mode`;
-  const SERVER_CLOSED_MSG = `Koa server closed on ${ip || ''}:${port} in ${env} mode`;
+  const { ip, port=8080, root:serverRoot=__dirname, env = appServer.env } = config.server;
 
   let httpServer = null;
+  let apps;
+  let server;
+
   const listen = () => {
     return new Promise(function(resolve, reject) {
-      httpServer = appServer.listen(port, ip, (error) => {
+      httpServer = appServer.listen(server.port, server.ip, (error) => {
         if(error) {
           reject(error);
         } else {
-          logger.info(SERVER_LISTENING_MSG);
+          logger.info(`Koa server listening on ${server.ip || ''}:${server.port} in ${server.env} mode`);
           resolve();
         }
       });
@@ -39,27 +30,37 @@ function createServer(Koa, config, logger) {
           reject(error);
         } else {
           httpServer = null;
-          logger.info(SERVER_CLOSED_MSG);
+          logger.info(`Koa server closed on ${server.ip || ''}:${server.port} in ${server.env} mode`);
           resolve();
         }
       });
     });
   };
-  let server;
+
   const start = (beforeStart) => {
-    return beforeStart ? beforeStart(server, config, logger).then(() => { return listen(); }) : listen();
+    apps = app.createApps(serverRoot, server.logger);
+    apps.forEach((app) => app.register(server, server.logger));
+
+    return beforeStart ? beforeStart(server, server.config, server.logger).then(() => { listen(); }) : listen();
   };
 
   const stop = (beforeStop) => {
-    return beforeStop ? beforeStop(server, logger).then(() => { return close(); }) : close();
+    return beforeStop ? beforeStop(server, server.logger).then(() => { return close(); }) : close();
   };
 
-  return server = {
+  server = {
+    ip,
+    port,
+    root: serverRoot,
+
     get httpServer() {
       return httpServer;
     },
+    get apps() {
+      return apps;
+    },
     appServer,
-    root,
+
     config,
     logger,
 
@@ -71,4 +72,6 @@ function createServer(Koa, config, logger) {
 
     env
   };
+
+  return server;
 }

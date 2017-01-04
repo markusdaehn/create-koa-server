@@ -1,5 +1,5 @@
 
-module.exports = function getAppConfigs(path, getDirectories, appsDir, server, logger) {
+module.exports = function getAppConfigs(path, getDirectories, appsDir, serverRoot, logger) {
   let appConfigs = getDirectories(appsDir, logger).map((directory) => {
     return {
       prefix: path.join('/', directory.name),
@@ -10,7 +10,7 @@ module.exports = function getAppConfigs(path, getDirectories, appsDir, server, l
   if(appConfigs.length === 0) {
     appConfigs.push({
       prefix: '/',
-      root: server.root
+      root: serverRoot
     });
   }
 

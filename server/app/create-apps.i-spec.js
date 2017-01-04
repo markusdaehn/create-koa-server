@@ -16,7 +16,7 @@ describe('server apps register -- integration', () => {
   let createAppSpy;
   let getAppConfigsSpy;
   let appsDir;
-  let server;
+  let serverRoot;
   let logger;
 
   beforeEach(() => {
@@ -24,10 +24,10 @@ describe('server apps register -- integration', () => {
     createAppSpy = sandbox.spy(createApp);
     getAppConfigsSpy = sandbox.spy(getAppConfigs);
     logger = createLogger(sandbox);
-    server = createServer(sandbox);
-    appsDir =  `${server.root}${constants.APPS_FOLDER}`;
-    register = R.curry(require('./register'))(path, createAppSpy, getAppConfigsSpy, constants.APPS_FOLDER);
-    register(server, logger);
+    serverRoot = path.resolve(__dirname, '../../tests/scenarios/multiple-apps-server');
+    appsDir =  `${serverRoot}${constants.APPS_FOLDER}`;
+    register = R.curry(require('./create-apps'))(path, createAppSpy, getAppConfigsSpy, constants.APPS_FOLDER);
+    register(serverRoot, logger);
   });
 
   afterEach(() => {
@@ -41,12 +41,6 @@ describe('server apps register -- integration', () => {
   });
 });
 
-function createServer(sandbox) {
-  return {
-    root: path.resolve(__dirname, '../../tests/scenarios/multiple-apps-server'),
-    use: sandbox.stub()
-  };
-}
 
 function createLogger(sandbox) {
   return {

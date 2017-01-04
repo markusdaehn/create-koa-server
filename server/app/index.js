@@ -5,9 +5,9 @@ const constants = require('../constants');
 const getDirectories = R.curry(require('../utils/get-directories'))(fs, path);
 const getAppConfigs = R.curry(require('./get-app-configs'))(path, getDirectories);
 const { create } = require('./factory');
-const register = R.curry(require('./register'))(path, create, getAppConfigs, constants.APPS_FOLDER);
+const createApps = R.curry(require('./create-apps'))(path, create, getAppConfigs, constants.APPS_FOLDER);
 
 module.exports = {
-  register,
+  createApps,
   create
 };

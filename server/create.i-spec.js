@@ -3,6 +3,7 @@ const createServer = require('./create.js');
 const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
+const nullableLogger = require('./utils/nullable-logger');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -37,7 +38,7 @@ describe('server create -- unit', () => {
         }
       };
 
-      server = createServer(Koa, appsRegistry, {config, logger});
+      server = createServer(Koa, appsRegistry, nullableLogger, {config, logger});
 
     });
 
