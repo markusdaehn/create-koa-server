@@ -22,7 +22,6 @@ describe('server.config.get-defaults -- integration', () => {
     });
 
     it('should return the default values', () => {
-      console.log('###defaults', defaults);
       assert.deepEqual(defaults, expected, 'The defaults did not match');
     });
   });

@@ -1,15 +1,21 @@
 module.exports = function register(path, getPlugins, PLUGINS_FOLDER, app, logger) {
-  logger.trace('server.middleware.plugins.register > : registering plugins');
+  let plugins = {};
+  for(let i = app.roots.length - 1; i >= 0; i--){
+    let pluginsDir = path.join(app.roots[i], PLUGINS_FOLDER);
+    let currentPlugins = getPlugins(pluginsDir, logger);
+    let pluginNames = Object.keys(currentPlugins);
 
-  let pluginsDir = path.join(app.root, PLUGINS_FOLDER);
+    logger.info(`server.middleware.plugins.register: found ${pluginNames.length} plugins at ${pluginsDir}`);
 
-  logger.debug(`server.middleware.plugins.register: getting plugins at ${pluginsDir}`);
-  let plugins = getPlugins(pluginsDir, logger);
+    pluginNames.forEach((pluginName)=> {
+      if(plugins[pluginName]) logger.info(`server.middleware.plugins.register: overriding plugin ${pluginName} with plugin found at ${pluginDir}`);
+      plugins[pluginName] = currentPlugins[pluginName];
+    });
+  }
+
 
   Object.keys(plugins).forEach((pluginName)=> {
     logger.info(`server.middleware.plugins.register: registering plugin ${pluginName}`);
     plugins[pluginName].register(app, logger);
   });
-
-  logger.trace('server.middlware.plugins.register < ');
 }

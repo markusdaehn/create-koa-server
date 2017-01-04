@@ -4,7 +4,6 @@ const server = require('./server');
 
 //@NOTE: Ensure to only call start if this is the entry point
 if(!module.parent) {
-  console.log('###', server)
   server.start(beforeStart);
 }
 

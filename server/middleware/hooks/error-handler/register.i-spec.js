@@ -23,13 +23,10 @@ describe('server middleware hooks error-handler register -- integration', () => 
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       logger = createLogger(sandbox);
-      app = {
-        use: sandbox.stub(),
-        root: path.resolve(__dirname, '../../../../tests/scenarios/basic-server')
-      };
-      getHandler = R.curry(require('./get-handler'))(Object.keys, getHooks, handleError);
+      app = createApp(sandbox);
+      getHandler = R.curry(require('./get-handler'))(Object.keys, getHooks);
       getHandlerSpy = sandbox.spy(getHandler);
-      createErrorHandler = R.curry(require('./create'))(path, getHandlerSpy, constants.HOOKS_ERROR_HANDLER_FOLDER);
+      createErrorHandler = R.curry(require('./create'))(path, getHandlerSpy, constants.HOOKS_ERROR_HANDLER_FOLDER, handleError);
       register = R.curry(require('./register'))(createErrorHandler);
     });
 
@@ -40,7 +37,7 @@ describe('server middleware hooks error-handler register -- integration', () => 
     it('should register all plugins', () => {
       register(app, logger);
 
-      assert.isTrue(getHandlerSpy.calledWith(path.join(app.root, constants.HOOKS_ERROR_HANDLER_FOLDER), logger), 'Did not call getHandler with the correct params');
+      assert.isTrue(getHandlerSpy.calledWith(path.join(app.roots[0], constants.HOOKS_ERROR_HANDLER_FOLDER), logger), 'Did not call getHandler with the correct params');
       assert.isTrue(app.use.calledOnce, 'The app should have registered the error handler')
     });
   });
@@ -51,5 +48,12 @@ function createLogger(sandbox) {
     info: function(){},
     debug: function(){},
     trace: function(){}
+  };
+}
+
+function createApp(sandbox) {
+  return {
+    use: sandbox.stub(),
+    roots: [path.resolve(__dirname, '../../../../tests/scenarios/basic-server')]
   };
 }

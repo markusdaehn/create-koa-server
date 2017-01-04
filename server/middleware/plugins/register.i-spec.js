@@ -20,10 +20,7 @@ describe('server middleware plugins register -- integration', () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       logger = createLogger(sandbox);
-      app = {
-        use: sandbox.stub(),
-        root: path.resolve(__dirname, '../../../tests/scenarios/basic-server')
-      };
+      app = createApp(sandbox);
       getPluginsSpy = sandbox.spy(getPlugins);
       register = R.curry(require('./register'))(path, getPluginsSpy, constants.PLUGINS_FOLDER);
     });
@@ -34,7 +31,7 @@ describe('server middleware plugins register -- integration', () => {
 
     it('should register all plugins', () => {
       register(app, logger);
-      assert.isTrue(getPluginsSpy.calledWith(path.join(app.root, constants.PLUGINS_FOLDER)), 'Did not call get plugins with the correct params');
+      assert.isTrue(getPluginsSpy.calledWith(path.join(app.roots[0], constants.PLUGINS_FOLDER)), 'Did not call get plugins with the correct params');
       assert.isTrue(app.use.calledTwice, 'The app should have registered two plugins')
     });
   });
@@ -45,5 +42,12 @@ function createLogger(sandbox) {
     info: sandbox.spy(),
     debug: sandbox.spy(),
     trace: sandbox.spy()
+  };
+}
+
+function createApp(sandbox) {
+  return {
+    use: sandbox.stub(),
+    roots: [path.resolve(__dirname, '../../../tests/scenarios/basic-server')]
   };
 }

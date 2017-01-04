@@ -1,5 +1,4 @@
 module.exports = function create(createMount, Koa, middleware, config, logger)  {
-  let { root, prefix ='/' } = config;
   let app = createApp(createMount, Koa, config, logger);
 
   middleware.register(app, logger);
@@ -8,12 +7,12 @@ module.exports = function create(createMount, Koa, middleware, config, logger)  
 }
 
 function createApp(createMount, Koa, config, logger)  {
-  let { root, prefix ='/' } = config;
+  let { roots, prefix ='/' } = config;
 
   let instance = new Koa();
   let app = {
     instance,
-    root,
+    roots,
     config,
 
     use: instance.use.bind(instance),

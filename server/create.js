@@ -2,11 +2,12 @@ module.exports = function createServer(Koa, app, nullableLogger, options) {
   let { config, logger = nullableLogger} = options;
 
   const appServer = new Koa();
-  const { ip, port=8080, root:serverRoot=__dirname, env = appServer.env } = config.server;
+  const { ip, port=8080, root:serverRoot, env = appServer.env } = config.server;
 
   let httpServer = null;
   let apps;
   let server;
+  let serverRoots = [serverRoot];
 
   const listen = () => {
     return new Promise(function(resolve, reject) {
@@ -38,7 +39,7 @@ module.exports = function createServer(Koa, app, nullableLogger, options) {
   };
 
   const start = (beforeStart) => {
-    apps = app.createApps(serverRoot, server.logger);
+    apps = app.createApps(serverRoots, server.logger);
     apps.forEach((app) => app.register(server, server.logger));
 
     return beforeStart ? beforeStart(server, server.config, server.logger).then(() => { listen(); }) : listen();
@@ -51,7 +52,7 @@ module.exports = function createServer(Koa, app, nullableLogger, options) {
   server = {
     ip,
     port,
-    root: serverRoot,
+    roots: serverRoots,
 
     get httpServer() {
       return httpServer;

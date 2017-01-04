@@ -1,6 +1,4 @@
 module.exports = function register(Router, initRoutes, registerHooks, app, logger) {
-  logger.trace(`server.middleware.hooks.router.register > : (root=${app.root})`);
-
   let router = new Router();
 
   registerHooks(router, app, logger);
@@ -9,6 +7,5 @@ module.exports = function register(Router, initRoutes, registerHooks, app, logge
   app.use(router.routes());
   app.use(router.allowedMethods());
 
-  logger.trace('server.middleware.hooks.router.register <');
   return router;
 }

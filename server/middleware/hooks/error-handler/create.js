@@ -1,8 +1,15 @@
-module.exports = function create(path, getHandler, HOOKS_ERROR_HANDLER_FOLDER, app, logger) {
+module.exports = function create(path, getHandler, HOOKS_ERROR_HANDLER_FOLDER, defaultHandler, app, logger) {
   logger.trace('server.middleware.hooks.error-handler.create > < : creating error handling middleware');
 
-  let handlerDir = path.join(app.root, HOOKS_ERROR_HANDLER_FOLDER);
-  let handle = getHandler(handlerDir, logger);
+  let handle;
+  for(let i = app.roots.length - 1; i >= 0; i--) {
+    let handlerDir = path.join(app.roots[i], HOOKS_ERROR_HANDLER_FOLDER);
+    handle = getHandler(handlerDir, logger);
+    if(handle) break;
+  }
+
+
+  handle = handle || defaultHandler;
 
   return function * (next) {
     try {

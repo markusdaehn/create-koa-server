@@ -38,7 +38,7 @@ describe('server create -- unit', () => {
     });
 
     it('should define the server root path', () => {
-      assert.isDefined(server.root, 'The server root path was not set');
+      assert.isArray(server.roots, 'The server root path was not set');
     });
 
     it('should call the koa constructor once', () => {
