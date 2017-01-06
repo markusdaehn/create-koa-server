@@ -9,7 +9,7 @@ describe('server config -- integration', () => {
 
     beforeEach(() => {
       logger = createLogger();
-      config = require('./index')(logger, process.env, serverRoot);
+      config = require('./index').create(logger, process.env, serverRoot);
     });
 
     it(`should return an object with a property server.env equal to '${process.env.NODE_ENV}'`, () => {

@@ -10,7 +10,7 @@ module.exports = function create(envVars) {
 
     root,
 
-    appName: `basic-app-${envVars.NODE_ENV}`,
+    appName: `exend-app-${envVars.NODE_ENV}`,
     logging: {
       level: envVars.LOG_LEVEL,
       path: envVars.LOG_PATH

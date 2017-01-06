@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
+const deepMerge = require('./utils/deep-merge');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -38,7 +39,7 @@ describe('server create -- unit', () => {
         }
       };
 
-      server = createServer(Koa, appsRegistry, nullableLogger, {config, logger});
+      server = createServer(Koa, appsRegistry, nullableLogger, deepMerge, {config, logger});
 
     });
 

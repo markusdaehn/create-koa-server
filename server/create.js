@@ -1,8 +1,8 @@
-module.exports = function createServer(Koa, app, nullableLogger, options) {
+module.exports = function createServer(Koa, app, nullableLogger, deepMerge, options) {
   let { config, logger = nullableLogger} = options;
 
-  const appServer = new Koa();
-  const { ip, port=8080, root:serverRoot, env = appServer.env } = config.server;
+  let appServer = new Koa();
+  let { ip, port=8080, root:serverRoot, env = appServer.env } = config || {};
 
   let httpServer = null;
   let apps;
@@ -49,6 +49,22 @@ module.exports = function createServer(Koa, app, nullableLogger, options) {
     return beforeStop ? beforeStop(server, server.logger).then(() => { return close(); }) : close();
   };
 
+  const extend = (options) => {
+    let { config = {}, logger } = options || {};
+    let { ip, port, root:serverRoot, env } = config;
+
+    server.config = deepMerge(server.config, config);
+    server.logger = logger || server.logger;
+    server.ip = ip || server.ip;
+    server.port = port || server.port;
+
+    if(serverRoot) {
+      server.roots.push(serverRoot);
+    }
+
+    return server;
+  };
+
   server = {
     ip,
     port,
@@ -67,6 +83,7 @@ module.exports = function createServer(Koa, app, nullableLogger, options) {
 
     start,
     stop,
+    extend,
 
     use: appServer.use.bind(appServer),
     emit: appServer.emit.bind(appServer),
