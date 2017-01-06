@@ -1,7 +1,7 @@
 module.exports = function registerHooks(path, getHooks, HOOKS_ROUTER_FOLDER, router, app, logger) {
   let hooks = {};
 
-  for(let i = app.roots.length -1; i >= 0; i--) {
+  for(let i = 0; i < app.roots.length; i++) {
     let hooksDir = path.join(app.roots[i], HOOKS_ROUTER_FOLDER);
     let currentHooks = getHooks(hooksDir, logger);
     let hookNames = Object.keys(currentHooks);

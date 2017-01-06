@@ -1,6 +1,6 @@
 module.exports = function register(path, getPlugins, PLUGINS_FOLDER, app, logger) {
   let plugins = {};
-  for(let i = app.roots.length - 1; i >= 0; i--){
+  for(let i = 0; i < app.roots.length; i++){
     let pluginsDir = path.join(app.roots[i], PLUGINS_FOLDER);
     let currentPlugins = getPlugins(pluginsDir, logger);
     let pluginNames = Object.keys(currentPlugins);

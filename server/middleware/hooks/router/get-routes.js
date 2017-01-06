@@ -1,6 +1,6 @@
 module.exports = function getRoutes(getRoute, glob, path, ROUTES_FOLDER, app, logger) {
   let routes = [];
-  for(let i = app.roots.length - 1; i >= 0; i--) {
+  for(let i =  0; i < app.roots.length; i++) {
     let currentRoutes = glob.sync(path.resolve(app.roots[i], `.${ROUTES_FOLDER}/**/index.js`), { cwd: app.roots[i], ignore:['./*']}).map(function(file) {
       logger.debug(`server.middleware.hooks.router.getRoutes: getting route: ${file}`);
 
@@ -11,7 +11,7 @@ module.exports = function getRoutes(getRoute, glob, path, ROUTES_FOLDER, app, lo
 
       return route;
     });
-    
+
     routes = routes.concat(currentRoutes);
   }
 
