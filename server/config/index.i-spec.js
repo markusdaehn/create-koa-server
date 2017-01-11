@@ -13,7 +13,7 @@ describe('server config -- integration', () => {
     });
 
     it(`should return an object with a property server.env equal to '${process.env.NODE_ENV}'`, () => {
-      assert.equal(config.server.env, process.env.NODE_ENV, 'The config did not have the correct environment');
+      assert.equal(config.env, process.env.NODE_ENV, 'The config did not have the correct environment');
     });
   });
 });

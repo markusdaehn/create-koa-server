@@ -1,12 +1,9 @@
 module.exports = function() {
   return {
-    server: {
-      env: 'development'
-    },
-    app: {
-      logging: {
-        level: 'trace'
-      }
+    env: 'development',
+
+    logging: {
+      level: 'trace'
     }
   };
 }

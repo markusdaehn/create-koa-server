@@ -1,22 +1,18 @@
 
-module.exports = function create(envVars) {
-  const root = envVars.SERVER_ROOT;
+module.exports = function create(envVars, serverRoot) {
+  const root = serverRoot;
 
   return {
-    server: {
-      env: 'base',
+    env: 'base',
 
-      ip: envVars.IP,
-      port: envVars.PORT,
+    ip: envVars.IP,
+    port: envVars.PORT,
 
-      root
-    },
-    app: {
-      name: `basic-app-${envVars.NODE_ENV}`,
-      logging: {
-        level: envVars.LOG_LEVEL,
-        path: envVars.LOG_PATH
-      }
+    root,
+    appName: `basic-app-${envVars.NODE_ENV}`,
+    logging: {
+      level: envVars.LOG_LEVEL,
+      path: envVars.LOG_PATH
     }
   };
 }

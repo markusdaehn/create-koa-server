@@ -11,7 +11,7 @@ describe('server config create-env -- integration', () => {
         let logger = createLogger();
         let config = createEnv(require, path, CONFIG_ENV_FOLDER, logger, {}, serverRoot, env);
 
-        assert.equal(config.server.env, env, 'The config did not have the correct environment');
+        assert.equal(config.env, env, 'The config did not have the correct environment');
       });
     });
   });
