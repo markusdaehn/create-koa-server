@@ -5,6 +5,7 @@ const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
 const deepMerge = require('./utils/deep-merge');
+const createConfig = require('./config');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -28,9 +29,9 @@ describe('server create -- unit', () => {
       logger = createLogger(sandbox);
       app = createApp(sandbox, httpServer);
       Koa =  sinon.spy(function() { return app });
-      config = createConfig();
+      config = createFakeConfig();
 
-      server = createServer(Koa, appsRegistry, nullableLogger, deepMerge, {config, logger});
+      server = createServer(Koa, appsRegistry, nullableLogger, deepMerge, createConfig, {config, logger});
 
     });
 
@@ -91,7 +92,7 @@ function createLogger(sandbox) {
   }
 }
 
-function createConfig() {
+function createFakeConfig() {
   let port = 8080;
   let ip = '156.129.55.01';
   let root = path.resolve(__dirname, '../tests/scenarios/basic-server');

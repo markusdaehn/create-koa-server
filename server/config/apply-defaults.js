@@ -1,12 +1,13 @@
-module.exports = function applyDefaults(getDefaults, assign, getKeys, freeze, logger, processEnv, serverRoot) {
+module.exports = function applyDefaults(getDefaults, assign, getKeys, freeze, logger, envVars, serverRoot) {
   const defaults = getDefaults(logger, serverRoot);
-  let env = assign({}, processEnv);
+
+  let envVarsCopy = assign({}, envVars);
 
   for(let key of getKeys(defaults)) {
-    if(!env[key]) {
-      env[key] = defaults[key];
+    if(!envVarsCopy[key]) {
+      envVarsCopy[key] = defaults[key];
     }
   }
 
-  return freeze(env);
+  return freeze(envVarsCopy);
 }

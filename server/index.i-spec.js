@@ -9,7 +9,7 @@ describe('server -- integration', () => {
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     logger = createLogger(sandbox);
-    config = createConfig(sandbox);
+    config = createFakeConfig(sandbox);
   });
 
   context('when calling the server.create method', () => {
@@ -19,7 +19,7 @@ describe('server -- integration', () => {
   });
 });
 
-function createConfig() {
+function createFakeConfig() {
   let port = 8080;
   let ip = '156.129.55.01';
   let root = path.resolve(__dirname, '../tests/scenarios/basic-server');

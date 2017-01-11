@@ -1,9 +1,9 @@
 
-module.exports = function create(envVars) {
-  const root = envVars.SERVER_ROOT;
+module.exports = function create(envVars, serverRoot) {
+  const root = serverRoot;
 
   return {
-    env: 'default',
+    env: envVars.NODE_ENV,
 
     ip: envVars.IP,
     port: envVars.PORT,

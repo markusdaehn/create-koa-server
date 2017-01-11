@@ -1,13 +1,17 @@
-module.exports = function createServer(Koa, app, nullableLogger, deepMerge, options) {
-  let { config, logger = nullableLogger} = options;
+module.exports = function createServer(Koa, app, nullableLogger, deepMerge, createConfig, options) {
+  options = options || {};
+
+  let config = buildConfig(deepMerge, createConfig, nullableLogger, options.envVars, options.config, options.serverRoot);
+  let logger = createLogger(nullableLogger, config);
 
   let appServer = new Koa();
-  let { ip, port=8080, root:serverRoot, env = appServer.env } = config || {};
+  let { ip, port=8080, root:serverRoot, env = appServer.env } = config;
 
   let httpServer = null;
   let apps;
   let server;
   let serverRoots = [serverRoot];
+
 
   const listen = () => {
     return new Promise(function(resolve, reject) {
@@ -50,16 +54,15 @@ module.exports = function createServer(Koa, app, nullableLogger, deepMerge, opti
   };
 
   const extend = (options) => {
-    let { config = {}, logger } = options || {};
-    let { ip, port, root:serverRoot, env } = config;
+    let config = buildConfig(deepMerge, createConfig, server.logger, options.envVars, options.config, options.serverRoot);
 
+    server.logger = createLogger(server.logger, config);
     server.config = deepMerge(server.config, config);
-    server.logger = logger || server.logger;
     server.ip = ip || server.ip;
     server.port = port || server.port;
 
-    if(serverRoot) {
-      server.roots.push(serverRoot);
+    if(config.root) {
+      server.roots.push(config.root);
     }
 
     return server;
@@ -92,4 +95,28 @@ module.exports = function createServer(Koa, app, nullableLogger, deepMerge, opti
   };
 
   return server;
+}
+
+function buildConfig(deepMerge, createConfig, logger, envVars = {}, config = {}, serverRoot = undefined) {
+  config.root = serverRoot || config.root;
+
+  if(config.root) {
+    config = deepMerge(createConfig(logger, envVars, config.root), config)
+  }
+
+  return config;
+}
+
+function createLogger(defaultLogger, options) {
+  let logger = defaultLogger;
+
+  if(options.createLogger) {
+    logger = createLogger(config);
+  }
+
+  if(options.logger) {
+    logger = options.logger;
+  }
+
+  return logger;
 }

@@ -5,6 +5,7 @@ const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
 const deepMerge = require('./utils/deep-merge');
+const {create:createConfig} = require('./config');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -39,8 +40,7 @@ describe('server create -- unit', () => {
         }
       };
 
-      server = createServer(Koa, appsRegistry, nullableLogger, deepMerge, {config, logger});
-
+      server = createServer(Koa, appsRegistry, nullableLogger, deepMerge, createConfig, {config, logger});
     });
 
     afterEach(() => {
