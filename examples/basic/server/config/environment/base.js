@@ -1,14 +1,14 @@
 
-module.exports = function create(envVars, serverRoot) {
-  const root = serverRoot;
+const path = require('path');
 
+module.exports = function create(envVars) {
   return {
     env: envVars.NODE_ENV,
 
     ip: envVars.IP,
     port: envVars.PORT,
 
-    root,
+    root: path.resolve(__dirname, '../..'),
 
     appName: `basic-app-${envVars.NODE_ENV}`,
     logging: {

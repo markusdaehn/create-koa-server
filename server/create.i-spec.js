@@ -33,14 +33,12 @@ describe('server create -- unit', () => {
       root = path.resolve(__dirname, '../tests/scenarios/basic-server');
 
       config = {
-        server: {
-          ip,
-          port,
-          root
-        }
+        ip,
+        port,
+        root
       };
 
-      server = createServer(Koa, appsRegistry, nullableLogger, deepMerge, createConfig, {config, logger});
+      server = createServer(Koa, appsRegistry, path.join, nullableLogger, deepMerge, createConfig, {config, logger});
     });
 
     afterEach(() => {

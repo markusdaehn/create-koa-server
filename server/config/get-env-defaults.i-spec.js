@@ -1,22 +1,22 @@
-const getDefaults = require('./get-defaults');
+const getEnvDefaults = require('./get-env-defaults');
 const path = require('path');
-const { DEFAULT_CONFIGS_NAME, CONFIG_FOLDER } = require('../constants');
+const { DEFAULT_CONFIGS_NAME } = require('./constants');
 const { assert } = require('chai');
 
-describe('server.config.get-defaults -- integration', () => {
+describe('server.config.get-env-defaults -- integration', () => {
   context('when there is a valid default', () => {
-    const serverRoot = path.resolve(__dirname, '../../tests/scenarios/basic-server');
+    const configPath = path.resolve(__dirname, '../../tests/scenarios/basic-server/config');
     let expected;
     let defaults;
     let logger;
 
     beforeEach(() => {
       logger = createLogger();
-      defaults = getDefaults(require, path, Object.freeze, DEFAULT_CONFIGS_NAME, CONFIG_FOLDER, logger, serverRoot);
+      defaults = getEnvDefaults(require, path.join, Object.freeze, logger, configPath);
       expected = {
         IP: undefined,
         PORT: 8080,
-        LOG_PATH: `${serverRoot}/logs/log.txt`,
+        LOG_PATH: `${configPath}/logs/log.txt`,
         LOG_LEVEL: 'error'
       };
     });

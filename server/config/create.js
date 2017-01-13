@@ -1,16 +1,16 @@
-module.exports = function create(applyDefaults, createEnv, deepMerge, BASE_CONFIG_NAME, logger, processEnv, serverRoot) {
-  let config = {};
+const BASE_CONFIG_NAME = 'base';
 
+module.exports = function create(applyDefaults, createEnv, deepMerge, logger, envVars, configPath) {
   try {
-    const env = applyDefaults(logger, processEnv, serverRoot);
+    envVars = applyDefaults(logger, envVars, configPath);
 
-    let baseConfig = createEnv(logger, env, serverRoot, BASE_CONFIG_NAME);
-    let envConfig = createEnv(logger, env, serverRoot, env.NODE_ENV);
+    let baseConfig = createEnv(logger, envVars, configPath, BASE_CONFIG_NAME);
+    let envConfig = createEnv(logger, envVars, configPath, envVars.NODE_ENV || baseConfig.appName || 'application');
 
-    config = deepMerge(baseConfig, envConfig);
+    return deepMerge(baseConfig, envConfig);
   } catch(e) {
     logger.info({exception: e}, 'server.config.create: error finding config');
   }
 
-  return config;
+  return {};
 }
