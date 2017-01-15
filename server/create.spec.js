@@ -20,6 +20,7 @@ describe('server create -- unit', () => {
     let root;
     let server;
     let httpServer;
+    let expectedConfig = createExpectedConfig();
 
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
@@ -30,8 +31,7 @@ describe('server create -- unit', () => {
       app = createApp(sandbox, httpServer);
       Koa =  sinon.spy(function() { return app });
       config = createFakeConfig();
-
-      server = createServer(Koa, appsRegistry, nullableLogger, deepMerge, createConfig, {config, logger});
+      server = createServer(Koa, appsRegistry, path.join, nullableLogger, deepMerge, createConfig, {config, logger, envVars: process.env});
 
     });
 
@@ -48,7 +48,7 @@ describe('server create -- unit', () => {
     });
 
     it('should set the server.config to the config passed into the create method', () => {
-      assert.deepEqual(server.config, config, 'The server config did not equal to the expected config');
+      assert.deepEqual(server.config, expectedConfig, 'The server config did not equal to the expected config');
     });
 
     it('should call apps register once', () => {
@@ -91,17 +91,26 @@ function createLogger(sandbox) {
     trace: sandbox.stub()
   }
 }
+function createExpectedConfig() {
+  let expected = createFakeConfig();
 
+  expected.appName = 'basic-app-test';
+  expected.env = 'test';
+  expected.logging = {
+    level: 'error',
+    path: path.resolve(__dirname, '../tests/scenarios/basic-server/logs/log.txt')
+  };
+
+  return expected;
+}
 function createFakeConfig() {
   let port = 8080;
   let ip = '156.129.55.01';
   let root = path.resolve(__dirname, '../tests/scenarios/basic-server');
 
   return {
-    server: {
-      ip,
-      port,
-      root
-    }
+    ip,
+    port,
+    root
   };
 }

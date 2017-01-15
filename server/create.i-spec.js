@@ -5,7 +5,7 @@ const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
 const deepMerge = require('./utils/deep-merge');
-const {create:createConfig} = require('./config');
+const createConfig = require('./config');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {

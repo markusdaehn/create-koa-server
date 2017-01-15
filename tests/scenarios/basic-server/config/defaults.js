@@ -1,8 +1,7 @@
-module.exports = function create(root) {
-  return {
-    IP: undefined,
-    PORT: 8080,
-    LOG_PATH: `${root}/logs/log.txt`,
-    LOG_LEVEL: 'error'
-  };
+const path = require('path');
+
+module.exports = {
+  PORT: 8080,
+  LOG_PATH: `${path.resolve(__dirname, '..')}/logs/log.txt`,
+  LOG_LEVEL: 'error'
 }

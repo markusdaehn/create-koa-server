@@ -14,9 +14,8 @@ describe('server.config.get-env-defaults -- integration', () => {
       logger = createLogger();
       defaults = getEnvDefaults(require, path.join, Object.freeze, logger, configPath);
       expected = {
-        IP: undefined,
         PORT: 8080,
-        LOG_PATH: `${configPath}/logs/log.txt`,
+        LOG_PATH: `${path.resolve(__dirname, '../../tests/scenarios/basic-server')}/logs/log.txt`,
         LOG_LEVEL: 'error'
       };
     });

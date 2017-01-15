@@ -1,6 +1,6 @@
 module.exports = function createEnv(getModule, joinPath, logger, envVars, configPath, configName) {
   if (!configName) {
-    console.info('server.config.create-env: missing a config name, returning an empty config');
+    logger.info('server.config.create-env: missing a config name, returning an empty config');
     return {};
   }
 
@@ -8,7 +8,7 @@ module.exports = function createEnv(getModule, joinPath, logger, envVars, config
     let configFile = joinPath(configPath, 'environment', configName);
     let config = getModule(configFile);
 
-    return typeof config === 'function' ? config(envVars) : config;
+    return typeof config === 'function' ? config(envVars, logger) : config;
   } catch(e) {
     logger.info({exception: e}, 'server.config.create-env');
   }
