@@ -3,7 +3,7 @@ const CONFIG_FOLDER_REL_PATH = 'config';
 module.exports = function createServer(Koa, app, joinPath, nullableLogger, deepMerge, createConfig, options) {
   options = options || {};
 
-  let config = buildConfig(joinPath, deepMerge, createConfig, nullableLogger, options.envVars, options.config, options.serverRoot);
+  let config = initConfig(joinPath, deepMerge, createConfig, nullableLogger, options.envVars, options.config, options.serverRoot);
   let logger = createLogger(nullableLogger, config);
 
   let appServer = new Koa();
@@ -56,7 +56,7 @@ module.exports = function createServer(Koa, app, joinPath, nullableLogger, deepM
   };
 
   const extend = (options) => {
-    let config = buildConfig(joinPath, deepMerge, createConfig, server.logger, options.envVars, options.config, options.serverRoot);
+    let config = initConfig(joinPath, deepMerge, createConfig, server.logger, options.envVars, options.config, options.serverRoot);
 
     server.logger = createLogger(server.logger, config);
     server.config = deepMerge(server.config, config);
@@ -99,7 +99,7 @@ module.exports = function createServer(Koa, app, joinPath, nullableLogger, deepM
   return server;
 }
 
-function buildConfig(joinPath, deepMerge, createConfig, logger, envVars = {}, config = {}, serverRoot = null) {
+function initConfig(joinPath, deepMerge, createConfig, logger, envVars = {}, config = {}, serverRoot = null) {
   config.root = serverRoot || config.root;
 
   let configPath = joinPath(config.root, CONFIG_FOLDER_REL_PATH);
