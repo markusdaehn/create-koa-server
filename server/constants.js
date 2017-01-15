@@ -7,9 +7,4 @@ module.exports = Object.freeze({
   ROUTES_FOLDER: '/routes',
   //apps
   APPS_FOLDER: '/apps',
-  //config
-  CONFIG_FOLDER: '/config',
-  CONFIG_ENV_FOLDER: '/config/environment',
-  BASE_CONFIG_NAME: 'base',
-  DEFAULT_CONFIGS_NAME: 'defaults'
 });
