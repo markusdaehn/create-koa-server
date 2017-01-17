@@ -25,11 +25,9 @@ function createFakeConfig() {
   let root = path.resolve(__dirname, '../tests/scenarios/basic-server');
 
   return {
-    server: {
-      ip,
-      port,
-      root
-    }
+    ip,
+    port,
+    root
   };
 }
 function createLogger(sandbox) {

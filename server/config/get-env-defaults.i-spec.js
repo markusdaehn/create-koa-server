@@ -1,6 +1,5 @@
 const getEnvDefaults = require('./get-env-defaults');
 const path = require('path');
-const { DEFAULT_CONFIGS_NAME } = require('./constants');
 const { assert } = require('chai');
 
 describe('server.config.get-env-defaults -- integration', () => {
