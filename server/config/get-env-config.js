@@ -1,4 +1,4 @@
-module.exports = function createEnv(getModule, joinPath, logger, envVars, configPath, configName) {
+module.exports = function getEnvConfig(getModule, joinPath, logger, envVars, configPath, configName) {
   if (!configName) {
     logger.info('server.config.create-env: missing a config name, returning an empty config');
     return {};
