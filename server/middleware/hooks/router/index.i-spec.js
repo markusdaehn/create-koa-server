@@ -31,7 +31,7 @@ describe('server middleware hooks router -- integration', () => {
 function createApp(sandbox) {
   return {
     use: sandbox.stub(),
-    roots: [path.resolve(__dirname, '../../../../tests/scenarios/basic-server')],
+    roots: [path.resolve(__dirname, '../../../../tests/scenarios/server/basic')],
     config: { app: { name: 'test-app' } }
   };
 }

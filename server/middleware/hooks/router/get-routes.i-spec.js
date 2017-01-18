@@ -7,7 +7,7 @@ const { assert } = require('chai');
 
 describe('server middleware hooks router get-routes -- integration', () => {
   const EXPECTED_ROUTES_LEN = 1;
-  const ROOT_NOSLASH = path.resolve(__dirname, '../../../../tests/scenarios/basic-server');
+  const ROOT_NOSLASH = path.resolve(__dirname, '../../../../tests/scenarios/server/basic');
   const ROOT_SLASH = `${ROOT_NOSLASH}/`;
   const JOINED_PATH = `${ROOT_SLASH}routes`;
   const GLOB_PATH = `.${constants.ROUTES_FOLDER}/**/index.js`;

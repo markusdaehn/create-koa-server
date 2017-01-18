@@ -16,13 +16,14 @@ describe('server apps get-app-configs -- integration', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    serverRoots = [path.resolve(__dirname, '../../tests/scenarios/multiple-apps-server')];
+    serverRoots = [path.resolve(__dirname, '../../tests/scenarios/server/multiple-apps')];
     logger = createLogger(sandbox);
   });
 
   context('when called with apps dir path', () => {
     it('should return two app configs', () => {
       let configs = getAppConfigs(serverRoots, logger);
+
       assert.isTrue(configs.map((c) => c.prefix).includes('/api'), 'Did not recieved expected app api');
     });
   });

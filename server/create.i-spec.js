@@ -30,7 +30,7 @@ describe('server create -- unit', () => {
       Koa =  sinon.spy(function() { return app });
       port = 8080;
       ip = '156.129.55.01';
-      root = path.resolve(__dirname, '../tests/scenarios/basic-server');
+      root = path.resolve(__dirname, '../tests/scenarios/server/basic');
 
       config = {
         ip,

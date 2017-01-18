@@ -4,7 +4,7 @@ const { assert } = require('chai');
 
 describe('server.config.get-env-defaults -- integration', () => {
   context('when there is a valid default', () => {
-    const configPath = path.resolve(__dirname, '../../tests/scenarios/basic-server/config');
+    const configPath = path.resolve(__dirname, '../../tests/scenarios/server/basic/config');
     let expected;
     let defaults;
     let logger;
@@ -14,7 +14,7 @@ describe('server.config.get-env-defaults -- integration', () => {
       defaults = getEnvDefaults(require, path.join, Object.freeze, logger, configPath);
       expected = {
         PORT: 8080,
-        LOG_PATH: `${path.resolve(__dirname, '../../tests/scenarios/basic-server')}/logs/log.txt`,
+        LOG_PATH: `${path.resolve(__dirname, '../../tests/scenarios/server/basic')}/logs/log.txt`,
         LOG_LEVEL: 'error'
       };
     });

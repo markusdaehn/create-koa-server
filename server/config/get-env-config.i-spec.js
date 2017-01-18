@@ -3,7 +3,7 @@ const path = require('path');
 const getEnvConfig = require('./get-env-config');
 
 describe('server config create-env -- integration', () => {
-  const configPath = path.resolve(__dirname, '../../tests/scenarios/basic-server/config');
+  const configPath = path.resolve(__dirname, '../../tests/scenarios/server/basic/config');
   ['production', 'development', 'test'].forEach((env) => {
     context(`when calling create-env with '${env}'`, () => {
       it(`should return an object with a property server.env equal to '${env}'`, () => {

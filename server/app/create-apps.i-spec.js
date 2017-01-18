@@ -23,7 +23,7 @@ describe('server apps register -- integration', () => {
     createAppSpy = sandbox.spy(createApp);
     getAppConfigsSpy = sandbox.spy(getAppConfigs);
     logger = createLogger(sandbox);
-    serverRoots = [path.resolve(__dirname, '../../tests/scenarios/multiple-apps-server')];
+    serverRoots = [path.resolve(__dirname, '../../tests/scenarios/server/multiple-apps')];
     register = R.curry(require('./create-apps'))(path, createAppSpy, getAppConfigsSpy);
     register(serverRoots, logger);
   });

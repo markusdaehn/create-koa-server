@@ -98,7 +98,7 @@ function createExpectedConfig() {
   expected.env = 'test';
   expected.logging = {
     level: 'error',
-    path: path.resolve(__dirname, '../tests/scenarios/basic-server/logs/log.txt')
+    path: path.resolve(__dirname, '../tests/scenarios/server/basic/logs/log.txt')
   };
 
   return expected;
@@ -106,7 +106,7 @@ function createExpectedConfig() {
 function createFakeConfig() {
   let port = 8080;
   let ip = '156.129.55.01';
-  let root = path.resolve(__dirname, '../tests/scenarios/basic-server');
+  let root = path.resolve(__dirname, '../tests/scenarios/server/basic');
 
   return {
     ip,

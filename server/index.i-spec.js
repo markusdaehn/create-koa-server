@@ -22,7 +22,7 @@ describe('server -- integration', () => {
 function createFakeConfig() {
   let port = 8080;
   let ip = '156.129.55.01';
-  let root = path.resolve(__dirname, '../tests/scenarios/basic-server');
+  let root = path.resolve(__dirname, '../tests/scenarios/server/basic');
 
   return {
     ip,

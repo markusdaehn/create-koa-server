@@ -3,7 +3,7 @@ const path = require('path');
 
 describe('server config -- integration', () => {
   context('when calling index', () => {
-    const configPath = path.resolve(__dirname, '../../tests/scenarios/basic-server/config');
+    const configPath = path.resolve(__dirname, '../../tests/scenarios/server/basic/config');
     let config;
     let logger;
 

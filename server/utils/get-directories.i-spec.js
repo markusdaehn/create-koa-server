@@ -6,7 +6,7 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 
 describe('server middleware plugins get-directories -- integration', () => {
-  const server = {root: path.resolve(__dirname, '../../tests/scenarios/basic-server')};
+  const server = {root: path.resolve(__dirname, '../../tests/scenarios/server/basic')};
   const expected_plugin_directories = [
     '0_test1-plugin',
     '1_test2-plugin'
