@@ -1,13 +1,13 @@
-const CONFIG_FOLDER_REL_PATH = 'config';
-
-module.exports = function createServer(Koa, app, joinPath, nullableLogger, deepMerge, createConfig, options) {
+module.exports = function createServer(Koa, app, joinPath, nullableLogger, extendConfig, options) {
   options = options || {};
-
-  let config = initConfig(joinPath, deepMerge, createConfig, nullableLogger, options.envVars, options.config, options.serverRoot);
-  let logger = createLogger(nullableLogger, config);
+  let configs = options.config ? [options.config] : [];
+  let serverRoot = configs.length > 0 && configs[0].root ? configs[0].root : options.serverRoot
+  let config = extendConfig({ root: serverRoot, configs});
+  console.log('!!!config=', config)
+  let logger = createLogger(nullableLogger, config, options);
 
   let appServer = new Koa();
-  let { ip, port=8080, root:serverRoot, env = appServer.env } = config;
+  let { ip, port=8080, env = appServer.env } = config;
 
   let httpServer = null;
   let apps;
@@ -55,11 +55,10 @@ module.exports = function createServer(Koa, app, joinPath, nullableLogger, deepM
     return beforeStop ? beforeStop(server, server.logger).then(() => { return close(); }) : close();
   };
 
-  const extend = (options) => {
-    let config = initConfig(joinPath, deepMerge, createConfig, server.logger, options.envVars, options.config, options.serverRoot);
+  const extend = (options = {}) => {
+    let config = extendConfig({root: options.serverRoot, configs: options.config ? [server.config, options.config] : [server.config]});
 
-    server.logger = createLogger(server.logger, config);
-    server.config = deepMerge(server.config, config);
+    server.logger = createLogger(server.logger, config, options);
     server.ip = ip || server.ip;
     server.port = port || server.port;
 
@@ -99,23 +98,11 @@ module.exports = function createServer(Koa, app, joinPath, nullableLogger, deepM
   return server;
 }
 
-function initConfig(joinPath, deepMerge, createConfig, logger, envVars = {}, config = {}, serverRoot = null) {
-  config.root = serverRoot || config.root;
-
-  let configPath = joinPath(config.root, CONFIG_FOLDER_REL_PATH);
-
-  if(config.root) {
-    config = deepMerge(createConfig(logger, envVars, configPath), config)
-  }
-
-  return config;
-}
-
-function createLogger(defaultLogger, options) {
+function createLogger(defaultLogger, config, options) {
   let logger = defaultLogger;
 
   if(options.createLogger) {
-    logger = createLogger(config);
+    logger = options.createLogger(config);
   }
 
   if(options.logger) {
