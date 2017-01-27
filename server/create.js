@@ -3,7 +3,6 @@ module.exports = function createServer(Koa, app, joinPath, nullableLogger, exten
   let configs = options.config ? [options.config] : [];
   let serverRoot = configs.length > 0 && configs[0].root ? configs[0].root : options.serverRoot
   let config = extendConfig({ root: serverRoot, configs});
-  console.log('!!!config=', config)
   let logger = createLogger(nullableLogger, config, options);
 
   let appServer = new Koa();
@@ -45,6 +44,7 @@ module.exports = function createServer(Koa, app, joinPath, nullableLogger, exten
   };
 
   const start = (beforeStart) => {
+    console.log('@@@@calling createApps')
     apps = app.createApps(serverRoots, server.logger);
     apps.forEach((app) => app.register(server, server.logger));
 

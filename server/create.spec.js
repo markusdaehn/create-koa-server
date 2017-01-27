@@ -4,7 +4,6 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
-const deepMerge = require('./utils/deep-merge');
 const extendConfig = require('./config/extend');
 
 describe('server create -- unit', () => {

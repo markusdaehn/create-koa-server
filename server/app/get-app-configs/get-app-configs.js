@@ -1,9 +1,9 @@
 
-module.exports = function getAppConfigs(path, getDirectories, APPS_FOLDER, serverRoots, logger) {
+module.exports = function getAppConfigs(path, getDirectories, extendConfig, APPS_FOLDER, appRoots, logger) {
   let appConfigs = [];
 
-  for(let i = 0; i < serverRoots.length; i++) {
-    let appsDir = path.join(serverRoots[i], APPS_FOLDER);
+  for(let i = 0; i < appRoots.length; i++) {
+    let appsDir = path.join(appRoots[i], APPS_FOLDER);
     let currentAppConfigs = getDirectories(appsDir, logger).map((directory) => {
       return {
         prefix: path.join('/', directory.name),
@@ -24,7 +24,7 @@ module.exports = function getAppConfigs(path, getDirectories, APPS_FOLDER, serve
   if(appConfigs.length === 0) {
     appConfigs.push({
       prefix: '/',
-      roots: serverRoots
+      roots: appRoots
     });
   }
 

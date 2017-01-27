@@ -1,5 +1,7 @@
-module.exports = function createApps(path, createApp, getAppConfigs, serverRoots, logger) {
-  return getAppConfigs(serverRoots, logger)
-              .map((config) => createApp(config, logger));
+module.exports = function createApps(path, createApp, getAppConfigs, appRoots, logger) {
+  const configs = getAppConfigs(appRoots, logger);
+  console.log('@@@configs', configs);
+  const apps = configs.map((config) => createApp(config, logger));
 
+  return apps;
 }
