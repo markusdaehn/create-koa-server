@@ -1,11 +1,10 @@
 const R = require('ramda');
 const path = require('path');
 const fs = require('fs');
-const constants = require('../constants');
-const getDirectories = R.curry(require('../utils/get-directories'))(fs, path);
-const extendConfig = require('../config/extend');
-const getAppConfigs = require('./get-app-configs');
-const createApp = require('./create');
+const getDirectories = R.curry(require('../../utils/get-directories'))(fs, path);
+const extendConfig = require('../../config/extend');
+const getAppConfigs = require('../get-app-configs');
+const createApp = require('../create');
 const sinon = require('sinon');
 const { assert } = require('chai');
 
@@ -24,7 +23,7 @@ describe('server apps register -- integration', () => {
     createAppSpy = sandbox.spy(createApp);
     getAppConfigsSpy = sandbox.spy(getAppConfigs);
     logger = createLogger(sandbox);
-    serverRoots = [path.resolve(__dirname, '../../tests/scenarios/server/multiple-apps')];
+    serverRoots = [path.resolve(__dirname, '../../../tests/scenarios/server/multiple-apps')];
     register = R.curry(require('./create-apps'))(path, createAppSpy, getAppConfigsSpy);
     register(serverRoots, logger);
   });
