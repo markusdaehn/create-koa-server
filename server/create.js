@@ -44,7 +44,6 @@ module.exports = function createServer(Koa, app, joinPath, nullableLogger, exten
   };
 
   const start = (beforeStart) => {
-    console.log('@@@@calling createApps')
     apps = app.createApps(serverRoots, server.logger);
     apps.forEach((app) => app.register(server, server.logger));
 

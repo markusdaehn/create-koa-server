@@ -4,7 +4,5 @@ module.exports = Object.freeze({
   HOOKS_ROUTER_FOLDER: '/middleware/hooks/router',
   HOOKS_ERROR_HANDLER_FOLDER: '/middleware/hooks/error-handler',
   //routes
-  ROUTES_FOLDER: '/routes',
-  //apps
-  APPS_FOLDER: '/apps',
+  ROUTES_FOLDER: '/routes'
 });
