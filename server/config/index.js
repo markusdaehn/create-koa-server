@@ -1,6 +1,5 @@
-const R = require('ramda');
-const extend = require('./extend');
+const getConfigs = require('./get-configs');
 
 module.exports = {
-  extend
+  getConfigs
 };

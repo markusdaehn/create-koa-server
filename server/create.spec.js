@@ -4,7 +4,8 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
-const extendConfig = require('./config/extend');
+const { getConfigs } = require('./config');
+const extend = require('deepmerge2');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -16,8 +17,8 @@ describe('server create -- unit', () => {
     let Koa;
     let port;
     let ip;
-    let root;
     let server;
+    let serverRoot;
     let httpServer;
     let expectedConfig = createExpectedConfig();
 
@@ -30,16 +31,13 @@ describe('server create -- unit', () => {
       app = createApp(sandbox, httpServer);
       Koa =  sinon.spy(function() { return app });
       config = createFakeConfig();
-      server = createServer(Koa, appsRegistry, path.join, nullableLogger, extendConfig, {config, serverRoot: config.root, logger, envVars: process.env});
+      serverRoot = path.resolve(__dirname, '../tests/scenarios/server/basic');
+      server = createServer(Koa, appsRegistry, nullableLogger, extend, getConfigs, {config, serverRoot, logger});
 
     });
 
     afterEach(() => {
       sandbox.restore();
-    });
-
-    it('should define the server root path', () => {
-      assert.isArray(server.roots, 'The server root path was not set');
     });
 
     it('should call the koa constructor once', () => {
@@ -91,26 +89,30 @@ function createLogger(sandbox) {
   }
 }
 function createExpectedConfig() {
-  let expected = createFakeConfig();
-
-  expected.ip = undefined;
-  expected.appName = 'basic-app-test';
-  expected.env = 'test';
-  expected.logging = {
-    level: 'error',
-    path: path.resolve(__dirname, '../tests/scenarios/server/basic/logs/log.txt')
+  return {
+    ip: undefined,
+    port: 8080,
+    '/': {
+       env: 'test',
+       ip: undefined,
+       port: 8080,
+       root: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic',
+       appName: 'basic-app-test',
+       logging: {
+          level: 'error',
+          path: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic/logs/log.txt'
+        },
+       __mountPrefix__: '/',
+       __appRoots__: [ '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic' ]
+     }
   };
-
-  return expected;
 }
 function createFakeConfig() {
   let port = 8080;
-  let ip = '156.129.55.01';
-  let root = path.resolve(__dirname, '../tests/scenarios/server/basic');
+  let ip;
 
   return {
     ip,
-    port,
-    root
+    port
   };
 }

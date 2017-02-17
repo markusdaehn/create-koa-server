@@ -5,16 +5,18 @@ describe('server -- integration', () => {
   let config;
   let logger;
   let server;
+  let serverRoot;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
     logger = createLogger(sandbox);
     config = createFakeConfig(sandbox);
+    serverRoot = path.resolve(__dirname, '../tests/scenarios/server/basic');
   });
 
   context('when calling the server.create method', () => {
     it('should create server', () => {
-      server = require('./')({config, logger});
+      server = require('./')({config, logger, serverRoot});
     });
   });
 });
@@ -22,12 +24,10 @@ describe('server -- integration', () => {
 function createFakeConfig() {
   let port = 8080;
   let ip = '156.129.55.01';
-  let root = path.resolve(__dirname, '../tests/scenarios/server/basic');
 
   return {
     ip,
-    port,
-    root
+    port
   };
 }
 function createLogger(sandbox) {

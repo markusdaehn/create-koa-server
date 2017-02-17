@@ -1,50 +1,38 @@
-const R = require('ramda');
-const path = require('path');
-const fs = require('fs');
-const getDirectories = R.curry(require('../../utils/get-directories'))(fs, path);
-const extendConfig = require('../../config/extend');
-const getAppDirectories = require('../get-app-directories');
-const createApp = require('../create');
-const sinon = require('sinon');
 const { assert } = require('chai');
+const createApps = require('./index');
+const path = require('path');
 
-
-
-describe('server apps register -- integration', () => {
-  let register;
-  let sandbox;
-  let createAppSpy;
-  let getAppDirectoriesSpy;
-  let serverRoots;
+describe('server.app.createApps -- integration', () => {
   let logger;
+  let apps;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
-    createAppSpy = sandbox.spy(createApp);
-    getAppDirectoriesSpy = sandbox.spy(getAppDirectories);
-    logger = createLogger(sandbox);
-    serverRoots = [path.resolve(__dirname, '../../../tests/scenarios/server/multiple-apps')];
-    register = R.curry(require('./create-apps'))(path, createAppSpy, getAppDirectoriesSpy);
-    register(serverRoots, logger);
+    logger = createLogger();
+    config = createConfig();
+    apps = createApps(config, logger);
   });
 
-  afterEach(() => {
-    sandbox.restore();
-  });
-
-  context('when register is called', () => {
-    it(`should call getAppDirectories with ${serverRoots}`, () => {
-      assert.equal(getAppDirectoriesSpy.args[0][0], serverRoots, 'get-app-configs was not called with the expected apps directory');
+  describe('when called with a valid config', () => {
+    it(`should call getAppDirectories with`, () => {
+      console.log(apps);
     });
   });
 });
 
+function createConfig() {
+  return {
+    '/api': {
+      '__appRoots__': [path.resolve(__dirname, '../../../tests/scenarios/server/multiple-apps')],
+      '__mountPrefix__': '/api'
+    }
+  };
+}
 
 function createLogger(sandbox) {
   return {
-    error: sandbox.spy(),
-    debug: sandbox.spy(),
-    trace: sandbox.spy(),
-    info: sandbox.spy()
+    error: () => {},
+    debug: () => {},
+    trace: () => {},
+    info: () => {}
   }
 }

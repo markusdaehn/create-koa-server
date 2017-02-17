@@ -4,7 +4,8 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
-const extendConfig = require('./config/extend');
+const { getConfigs } = require('./config');
+const extend = require('deepmerge2');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -16,7 +17,6 @@ describe('server create -- unit', () => {
     let Koa;
     let port;
     let ip;
-    let root;
     let server;
 
     beforeEach(() => {
@@ -29,15 +29,14 @@ describe('server create -- unit', () => {
       Koa =  sinon.spy(function() { return app });
       port = 8080;
       ip = '156.129.55.01';
-      root = path.resolve(__dirname, '../tests/scenarios/server/basic');
+      serverRoot = path.resolve(__dirname, '../tests/scenarios/server/basic');
 
       config = {
         ip,
-        port,
-        root
+        port
       };
 
-      server = createServer(Koa, appsRegistry, path.join, nullableLogger, extendConfig, {config, logger});
+      server = createServer(Koa, appsRegistry, nullableLogger, extend, getConfigs, {config, serverRoot, logger});
     });
 
     afterEach(() => {

@@ -7,19 +7,18 @@ module.exports = function create(createMount, Koa, middleware, config, logger)  
 }
 
 function createApp(createMount, Koa, config, logger)  {
-  let { roots, prefix ='/' } = config;
-
   let instance = new Koa();
   let app = {
     instance,
-    roots,
+    roots: config.__appRoots__ || [],
+    mountPrefix: config.__mountPrefix__,
     config,
 
     use: instance.use.bind(instance),
     emit: instance.emit.bind(instance),
 
     register(server, logger) {
-      let mount = createMount(prefix, app.instance);
+      let mount = createMount(app.mountPrefix, app.instance);
 
       server.use(mount);
 

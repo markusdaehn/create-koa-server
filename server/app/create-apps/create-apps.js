@@ -1,10 +1,5 @@
-const CONFIG_FOLDER = 'config';
-
-module.exports = function createApps(joinPath, getConfig, createApp, getAppDirectories, serverRoots, logger) {
-
-
-
-  const apps = configs.map((config) => createApp(config, logger));
+module.exports = function createApps(getObjectKeys, createApp, config, logger) {
+  const apps = getObjectKeys(config).map((mountPrefix) => createApp(config[mountPrefix], logger));
 
   return apps;
 }
