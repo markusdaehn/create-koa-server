@@ -1,6 +1,6 @@
 const { curry } = require('ramda');
-const path = require('path');
-const getAppDirectories = require('../../app/get-app-directories');
-const getConfig = require('get-conf');
+const extend = require('deepmerge2');
+const getRootConfig = require('../get-root-config');
+const getAppConfigs = require('../get-app-configs');
 
-module.exports = curry(require('./get-configs'))(path.join, Object.freeze, getAppDirectories, getConfig);
+module.exports = curry(require('./get-configs'))(getRootConfig, getAppConfigs, extend, Object.freeze);

@@ -1,2 +1,2 @@
 const config = require('./config');
-module.exports = require('../../basic/server').extend({config});
+module.exports = require('../../basic/server').create({config});

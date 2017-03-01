@@ -1,4 +1,6 @@
-module.exports = function createServer(Koa, appFactory, nullableLogger, extend, getConfigs, options) {
+const ROOT_MOUNT_PREFIX = '/';
+
+module.exports = function createServer(Koa, appFactory, nullableLogger, normalize, extend, getConfigs, options) {
   options = options || {};
 
   let {
@@ -8,14 +10,16 @@ module.exports = function createServer(Koa, appFactory, nullableLogger, extend, 
     serverRoot
   } = options;
 
-  config = extend(config, getConfigs(serverRoot, logger));
+  if(typeof serverRoot === 'string') {
+    config = extend(normalize(config), getConfigs(serverRoot, logger));
+  }
 
   let { ip, port, env } = config;
   let appServer = new Koa();
   let httpServer, apps;
 
   server = {
-    get ip() { return ip || 8080},
+    get ip() { return ip || 8080 },
     port,
     httpServer,
     apps,
@@ -41,13 +45,13 @@ module.exports = function createServer(Koa, appFactory, nullableLogger, extend, 
 }
 
 function init(server, appFactory, createLogger) {
-  server.logger = server.logger || createLogger(server.config.logging);
+  server.logger = server.logger || createLogger(server.config[ROOT_MOUNT_PREFIX]);
   server.apps = appFactory.createApps(server.config, server.logger);
   server.apps.forEach((app) => app.register(server, server.logger));
 }
 
 function create(server, options={}) {
-  options.config = options.config ? extend(server.config, options.config) : server.config;
+  options.config = extend(server.config, options.config || {});
   options.logger = options.logger || server.logger;
   options.createLogger = options.createLogger || server.createLogger;
 

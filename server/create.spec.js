@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const { assert } = require('chai');
 const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
-const { getConfigs } = require('./config');
+const { getConfigs, normalizeRootConfig } = require('./config');
 const extend = require('deepmerge2');
 
 describe('server create -- unit', () => {
@@ -32,7 +32,7 @@ describe('server create -- unit', () => {
       Koa =  sinon.spy(function() { return app });
       config = createFakeConfig();
       serverRoot = path.resolve(__dirname, '../tests/scenarios/server/basic');
-      server = createServer(Koa, appsRegistry, nullableLogger, extend, getConfigs, {config, serverRoot, logger});
+      server = createServer(Koa, appsRegistry, nullableLogger, normalizeRootConfig, extend, getConfigs, {config, serverRoot, logger});
 
     });
 
@@ -90,26 +90,26 @@ function createLogger(sandbox) {
 }
 function createExpectedConfig() {
   return {
-    ip: undefined,
-    port: 8080,
+    server: {
+      ip: undefined,
+      port: 8080,
+      appName: 'basic-app-test',
+      logging: {
+         level: 'error',
+         path: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic/logs/log.txt'
+       },
+       env: 'test'
+    },
     '/': {
-       env: 'test',
-       ip: undefined,
-       port: 8080,
-       root: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic',
-       appName: 'basic-app-test',
-       logging: {
-          level: 'error',
-          path: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic/logs/log.txt'
-        },
        __mountPrefix__: '/',
-       __appRoots__: [ '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic' ]
+       __appRoots__: [ '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic' ],
+       root: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic'
      }
   };
 }
 function createFakeConfig() {
   let port = 8080;
-  let ip;
+  let ip = '127.0.0.1';
 
   return {
     ip,

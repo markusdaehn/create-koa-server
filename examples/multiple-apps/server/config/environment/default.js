@@ -1,15 +1,13 @@
+const path = require('path');
 
 module.exports = function create(envVars) {
-  const root = envVars.SERVER_ROOT;
-
   return {
-    env: 'default',
+    env: 'base',
 
     ip: envVars.IP,
     port: envVars.PORT,
 
-    root,
-
+    root: path.resolve(__dirname, '../..'),
     appName: `basic-app-${envVars.NODE_ENV}`,
     logging: {
       level: envVars.LOG_LEVEL,

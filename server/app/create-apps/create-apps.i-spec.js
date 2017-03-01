@@ -14,7 +14,7 @@ describe('server.app.createApps -- integration', () => {
 
   describe('when called with a valid config', () => {
     it(`should call getAppDirectories with`, () => {
-      console.log(apps);
+      //console.log(apps);
     });
   });
 });
