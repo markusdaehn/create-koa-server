@@ -1,7 +1,6 @@
 
 const path = require('path');
 
-console.log('##>', envVars);
 
 module.exports = function create(envVars) {
   return {

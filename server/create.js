@@ -14,12 +14,12 @@ module.exports = function createServer(Koa, appFactory, nullableLogger, normaliz
     config = extend(normalize(config), getConfigs(serverRoot, logger));
   }
 
-  let { ip, port, env } = config;
+  let { ip=8080, port, env } = config.server;
   let appServer = new Koa();
   let httpServer, apps;
 
   server = {
-    get ip() { return ip || 8080 },
+    ip,
     port,
     httpServer,
     apps,
@@ -28,10 +28,10 @@ module.exports = function createServer(Koa, appFactory, nullableLogger, normaliz
     config,
     logger,
 
-    start(options) { return start(this, options); },
-    stop(options) { return stop(this, options); },
-    create(options) { return create(this, options); },
-    init() { return init(this, appFactory, createLogger); },
+    start(options) { return start(server, options); },
+    stop(options) { return stop(server, options); },
+    create(options) { return create(server, Koa, appFactory, nullableLogger, normalize, extend, getConfigs, options); },
+    init() { return init(server, appFactory, createLogger); },
 
     use: appServer.use.bind(appServer),
     emit: appServer.emit.bind(appServer),
@@ -40,26 +40,28 @@ module.exports = function createServer(Koa, appFactory, nullableLogger, normaliz
       return env || appServer.env;
     }
   };
-
+  console.log('####createServer=>server.ip', server.ip)
   return server;
 }
 
 function init(server, appFactory, createLogger) {
-  server.logger = server.logger || createLogger(server.config[ROOT_MOUNT_PREFIX]);
+  server.logger = server.logger || createLogger(server.config.server);
   server.apps = appFactory.createApps(server.config, server.logger);
   server.apps.forEach((app) => app.register(server, server.logger));
 }
 
-function create(server, options={}) {
+function create(server, Koa, appFactory, nullableLogger, normalize, extend, getConfigs, options={}) {
   options.config = extend(server.config, options.config || {});
   options.logger = options.logger || server.logger;
   options.createLogger = options.createLogger || server.createLogger;
 
-  return createServer(Koa, app, nullableLogger, extend, getConfigs, options)
+  return createServer(Koa, appFactory, nullableLogger, normalize, extend, getConfigs, options)
 }
 
 function listen (server) {
+  console.log('####listen=>server.ip', server.ip)
   return new Promise(function(resolve, reject) {
+    console.log('####listen/promise=>server.ip', typeof(server.ip))
     server.httpServer = server.appServer.listen(server.port, server.ip, (error) => {
       if(error) {
         reject(error);
@@ -91,7 +93,7 @@ function start (server, options={}) {
   let { beforeStart } = options;
 
   server.init();
-
+  console.log('###start=>server.ip', server.ip)
   return beforeStart ? beforeStart(server, server.config, server.logger).then(() => { listen(server); }) : listen(server);
 };
 

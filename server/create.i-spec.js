@@ -6,6 +6,7 @@ const path = require('path');
 const nullableLogger = require('./utils/nullable-logger');
 const { getConfigs } = require('./config');
 const extend = require('deepmerge2');
+const normalize = require('./config/normalize-root-config');
 
 describe('server create -- unit', () => {
   context('when create is called', () => {
@@ -36,7 +37,7 @@ describe('server create -- unit', () => {
         port
       };
 
-      server = createServer(Koa, appsRegistry, nullableLogger, extend, getConfigs, {config, serverRoot, logger});
+      server = createServer(Koa, appsRegistry, nullableLogger, normalize, extend, getConfigs, {config, serverRoot, logger});
     });
 
     afterEach(() => {
