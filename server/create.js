@@ -14,7 +14,7 @@ module.exports = function createServer(Koa, appFactory, nullableLogger, normaliz
     config = extend(normalize(config), getConfigs(serverRoot, logger));
   }
 
-  let { ip=8080, port, env } = config.server;
+  let { ip, port=8080, env } = config.server;
   let appServer = new Koa();
   let httpServer, apps;
 
@@ -40,7 +40,6 @@ module.exports = function createServer(Koa, appFactory, nullableLogger, normaliz
       return env || appServer.env;
     }
   };
-  console.log('####createServer=>server.ip', server.ip)
   return server;
 }
 
@@ -59,9 +58,7 @@ function create(server, Koa, appFactory, nullableLogger, normalize, extend, getC
 }
 
 function listen (server) {
-  console.log('####listen=>server.ip', server.ip)
   return new Promise(function(resolve, reject) {
-    console.log('####listen/promise=>server.ip', typeof(server.ip))
     server.httpServer = server.appServer.listen(server.port, server.ip, (error) => {
       if(error) {
         reject(error);
@@ -93,7 +90,7 @@ function start (server, options={}) {
   let { beforeStart } = options;
 
   server.init();
-  console.log('###start=>server.ip', server.ip)
+  
   return beforeStart ? beforeStart(server, server.config, server.logger).then(() => { listen(server); }) : listen(server);
 };
 
