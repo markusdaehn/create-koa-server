@@ -1,5 +1,8 @@
-const config = require('./config');
-const logger = require('../infrustructure/logging/logger')(config.env, config.appName, config.logging);
+const Logger = require('../infrustructure/logging/logger');
 
-//module.exports = require('create-koa-server')({config, logger});
-module.exports = require('../../../server')({config, logger});
+const createLogger = (config) => {
+  return Logger(config.env, config.appName, config.logging);
+};
+
+//module.exports = require('create-koa-server')({createLogger, serverRoot: __dirname});
+module.exports = require('../../../server')({createLogger, serverRoot: __dirname});
