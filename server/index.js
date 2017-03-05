@@ -6,6 +6,6 @@ const { getConfigs } = require('./config');
 const extend = require('deepmerge2');
 const normalize = require('./config').normalizeRootConfig;
 
-const createServer = R.curry(require('./create'))(Koa, app, nullableLogger, normalize, extend, getConfigs);
+const createServer = (options) => require('./create')(Koa, app, nullableLogger, normalize, extend, getConfigs, options);
 
 module.exports = createServer;

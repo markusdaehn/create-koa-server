@@ -1,14 +1,13 @@
 const ROOT_MOUNT_PREFIX = '/';
 
-module.exports = function createServer(Koa, appFactory, nullableLogger, normalize, extend, getConfigs, options) {
-  options = options || {};
-
+const createServer = function (Koa, appFactory, nullableLogger, normalize, extend, getConfigs, options = {}) {
   let {
     config={},
     createLogger=()=>{ return nullableLogger; },
     logger,
     serverRoot
   } = options;
+
 
   if(typeof serverRoot === 'string') {
     config = extend(normalize(config), getConfigs(serverRoot, logger));
@@ -53,12 +52,12 @@ function create(server, Koa, appFactory, nullableLogger, normalize, extend, getC
   options.config = extend(server.config, options.config || {});
   options.logger = options.logger || server.logger;
   options.createLogger = options.createLogger || server.createLogger;
-
   return createServer(Koa, appFactory, nullableLogger, normalize, extend, getConfigs, options)
 }
 
 function listen (server) {
   return new Promise(function(resolve, reject) {
+    console.log('starting to listen');
     server.httpServer = server.appServer.listen(server.port, server.ip, (error) => {
       if(error) {
         reject(error);
@@ -90,8 +89,7 @@ function start (server, options={}) {
   let { beforeStart } = options;
 
   server.init();
-  
-  return beforeStart ? beforeStart(server, server.config, server.logger).then(() => { listen(server); }) : listen(server);
+  return beforeStart ? beforeStart(server, server.config, server.logger).then(() => { return listen(server); }) : listen(server);
 };
 
 function stop (server, options={}) {
@@ -99,3 +97,6 @@ function stop (server, options={}) {
 
   return beforeStop ? beforeStop(server, server.logger).then(() => { return close(server); }) : close(server);
 };
+
+
+module.exports = createServer;

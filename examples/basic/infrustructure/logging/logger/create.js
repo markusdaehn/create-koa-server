@@ -1,5 +1,4 @@
 module.exports = function create(bunyan, stream, env, appName, config) {
-  console.log('##!', config)
   if(config.enabled === false) {
     return createStub();
   }
