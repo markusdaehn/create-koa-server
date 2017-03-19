@@ -13,6 +13,7 @@ You can "extend" a predefined koa server implementation. Once you create a serve
 The ```create``` method is similar to the ```create-koa-server``` except it loads the previous implementation and then loads the new implementation.
 
 The new implementation can override configs and middleware by simply following the same conventions explained in the applications section below.
+
 ### Application
 Applications can be defined as either single or multi app.
 
