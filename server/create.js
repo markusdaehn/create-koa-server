@@ -8,12 +8,9 @@ const createServer = function (Koa, appFactory, nullableLogger, normalize, exten
     serverRoot
   } = options;
 
-  console.log('options=', options);
   if(typeof serverRoot === 'string') {
-    console.log('before config=', config);
     config = extend(normalize(config), getConfigs(serverRoot, logger));
   }
-  console.log('after config=', config);
 
   let { ip, port=8080, env } = config.server;
   let appServer = new Koa();
@@ -59,7 +56,6 @@ function create(server, Koa, appFactory, nullableLogger, normalize, extend, getC
 
 function listen (server) {
   return new Promise(function(resolve, reject) {
-    console.log('starting to listen');
     server.httpServer = server.appServer.listen(server.port, server.ip, (error) => {
       if(error) {
         reject(error);
