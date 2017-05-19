@@ -1,6 +1,6 @@
 {
   "name": "create-koa-server",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "description": "Koa API/WEB server",
   "main": "./server",
   "scripts": {
@@ -11,7 +11,6 @@
     "watch-i-test": "./node_modules/.bin/nodemon --exec 'npm run i-test'",
     "watch-test": "./node_modules/.bin/nodemon --exec 'npm test'",
     "lint": "esw .eslintrc.js src/ lib/ tests/ -w --fix --ignore-pattern !.eslintrc.js"
-
   },
   "repository": {
     "type": "git",
