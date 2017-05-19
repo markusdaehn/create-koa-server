@@ -9,7 +9,9 @@
     "prepublish": "npm test && npm run i-test",
     "test": "NODE_ENV=test node ./node_modules/.bin/_mocha \"./**/*.spec.js\"",
     "watch-i-test": "./node_modules/.bin/nodemon --exec 'npm run i-test'",
-    "watch-test": "./node_modules/.bin/nodemon --exec 'npm test'"
+    "watch-test": "./node_modules/.bin/nodemon --exec 'npm test'",
+    "lint": "esw .eslintrc.js src/ lib/ tests/ -w --fix --ignore-pattern !.eslintrc.js"
+
   },
   "repository": {
     "type": "git",
@@ -41,8 +43,14 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.1.2",
+    "mocha": "^3.3.0",
     "nodemon": "^1.11.0",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "eslint": "^3.19.0",
+    "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-prettier": "^2.0.1",
+    "eslint-watch": "^3.1.0",
+    "prettier": "^1.2.2",
+    "prettier-eslint": "^5.1.0"
   }
 }

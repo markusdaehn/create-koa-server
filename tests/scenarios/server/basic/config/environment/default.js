@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = function create(envVars) {
   return {
@@ -13,5 +13,5 @@ module.exports = function create(envVars) {
       level: envVars.LOG_LEVEL,
       path: envVars.LOG_PATH
     }
-  };
+  }
 }

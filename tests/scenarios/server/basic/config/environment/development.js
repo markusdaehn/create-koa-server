@@ -5,5 +5,5 @@ module.exports = function(envVars) {
     logging: {
       level: 'trace'
     }
-  };
+  }
 }

@@ -1,0 +1,9 @@
+#test
+tests
+examples
+
+#linters
+.eslintrc*
+
+#scripts
+deploy.sh

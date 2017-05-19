@@ -7,6 +7,7 @@ npm i --save create-koa-server
 ```
 
 ## Usage
+Below are some basic usage information. If you prefer, you can take a look a some basic examples [here](https://github.com/markusdaehn/create-koa-server/tree/master/examples)
 ### Extend
 You can "extend" a predefined koa server implementation. Once you create a server using the ```create-koa-server```, it returns a server object that has a ```create``` method on it.
 
