@@ -1,5 +1,5 @@
 # create-koa-server
-Create a koa server based on standard conventions. It provides a few starter examples to kick start development of an Koa API/Web Server.
+This module allows creating a re-usable Koa server based on conventions. You can create a base implementation re-use it or extend it using the extend feature described below. See the examples [here](https://github.com/markusdaehn/create-koa-server/tree/master/examples).
 
 ## Installation
 ```sh
@@ -7,7 +7,8 @@ npm i --save create-koa-server
 ```
 
 ## Usage
-Below are some basic usage information. If you prefer, you can take a look a some basic examples [here](https://github.com/markusdaehn/create-koa-server/tree/master/examples)
+Below are some basic usage information.
+
 ### Extend
 You can "extend" a predefined koa server implementation. Once you create a server using the ```create-koa-server```, it returns a server object that has a ```create``` method on it.
 
