@@ -4,10 +4,9 @@ const { assert } = require('chai');
 
 describe('server.config.get-app-configs()', () => {
   const logger = createLogger()
-  describe('when passed server root with app in the apps folder', () => {
+  describe.only('when passed server root with app in the apps folder', () => {
     const serverRoot = path.resolve(__dirname, '../../../tests/scenarios/server/multiple-apps');
     const configs = getConfigs(serverRoot, logger)
-
       assert.isDefined(configs['/api'], 'The /api config was not defined');
       it('should return a configs dictionary with /api defined', () => {
     });

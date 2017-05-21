@@ -15,7 +15,6 @@ const createServer = function (Koa, appFactory, nullableLogger, normalize, exten
   let { ip, port=8080, env } = config.server;
   let appServer = new Koa();
   let httpServer, apps;
-
   server = {
     ip,
     port,

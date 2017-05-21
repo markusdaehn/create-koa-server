@@ -45,6 +45,9 @@ describe('server create -- unit', () => {
     });
 
     it('should set the server.config to the config passed into the create method', () => {
+      console.log('/===>server.config=', server.config)
+      console.log('====================')
+      console.log('/===>expectedConfig=', expectedConfig)
       assert.deepEqual(server.config, expectedConfig, 'The server config did not equal to the expected config');
     });
 
@@ -96,14 +99,14 @@ function createExpectedConfig() {
       appName: 'basic-app-test',
       logging: {
          level: 'error',
-         path: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic/logs/log.txt'
+         path: path.resolve(__dirname, '../tests/scenarios/server/basic/logs/log.txt')
        },
        env: 'test'
     },
     '/': {
        __mountPrefix__: '/',
-       __appRoots__: [ '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic' ],
-       root: '/Users/markusdaehn/Documents/sdf/create-koa-server/tests/scenarios/server/basic'
+       __appRoots__: [ path.resolve(__dirname, '../tests/scenarios/server/basic') ],
+       root: path.resolve(__dirname, '../tests/scenarios/server/basic')
      }
   };
 }
